@@ -1,0 +1,2537 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ Thống Thông Báo Nội Bộ – Trường THCS Võ Thị Sáu</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════════ */
+#landing {
+  position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(135deg, #050e2a 0%, #0d2b5e 40%, #164494 70%, #1a5ccc 100%);
+  display: flex; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden;
+}
+
+/* Animated background particles */
+#landing::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(26,92,204,.25) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(200,146,42,.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(0,198,255,.08) 0%, transparent 60%);
+  animation: bgPulse 6s ease-in-out infinite;
+}
+@keyframes bgPulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: .7; }
+}
+
+/* Grid texture overlay */
+#landing::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── HERO ── */
+.lp-hero {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 60px 24px 40px;
+  animation: fadeDown .8s cubic-bezier(.34,1.2,.64,1) both;
+}
+@keyframes fadeDown { from{opacity:0;transform:translateY(-30px)} to{opacity:1;transform:translateY(0)} }
+
+.lp-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 50px; padding: 6px 16px;
+  font-size: 11.5px; font-weight: 600;
+  color: rgba(255,255,255,.8);
+  margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+  letter-spacing: .5px;
+}
+.lp-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.lp-school-icon {
+  width: 110px; height: 110px; margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 0 0 5px rgba(200,146,42,.35),
+    0 0 0 11px rgba(200,146,42,.15),
+    0 10px 50px rgba(200,146,42,.5),
+    0 0 60px rgba(26,92,204,.25);
+  animation: iconFloat 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  padding: 4px;
+}
+.lp-school-icon img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.lp-school-icon::after {
+  content: '';
+  position: absolute; inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(200,146,42,.5);
+  animation: ringExpand 2s ease-out infinite;
+}
+@keyframes iconFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes ringExpand { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(1.4);opacity:0} }
+
+.lp-school-name {
+  font-size: 13px; font-weight: 800; letter-spacing: 2.5px;
+  color: rgba(255,255,255,.55);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.lp-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 28px; font-weight: 700;
+  color: #fff; line-height: 1.2;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+  text-shadow: 0 2px 20px rgba(0,0,0,.3);
+}
+.lp-title span {
+  background: linear-gradient(90deg, #ffd96a, #ffb347, #ffd96a);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+}
+@keyframes shine { to { background-position: 200% center; } }
+
+.lp-subtitle {
+  font-size: 14px; color: rgba(255,255,255,.65);
+  line-height: 1.7; max-width: 500px; margin: 0 auto 32px;
+}
+
+.lp-enter-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 36px; border-radius: 50px;
+  background: linear-gradient(135deg, #c8922a 0%, #e8b04a 100%);
+  color: #fff; font-family: inherit; font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer;
+  box-shadow: 0 6px 30px rgba(200,146,42,.5), 0 2px 0 rgba(255,255,255,.2) inset;
+  transition: all .25s; letter-spacing: .3px;
+  position: relative; overflow: hidden;
+}
+.lp-enter-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.2) 0%, transparent 60%);
+  border-radius: 50px;
+}
+.lp-enter-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(200,146,42,.6);
+}
+.lp-enter-btn .arrow {
+  font-size: 18px;
+  transition: transform .25s;
+}
+.lp-enter-btn:hover .arrow { transform: translateX(4px); }
+
+/* ── STATS ROW ── */
+.lp-stats {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; padding: 0 24px 40px;
+  max-width: 700px; margin: 0 auto; width: 100%;
+  animation: fadeUp .8s .2s both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.lp-stat {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px; padding: 18px 16px;
+  text-align: center; backdrop-filter: blur(12px);
+  transition: all .2s;
+}
+.lp-stat:hover { background: rgba(255,255,255,.11); transform: translateY(-2px); }
+.lp-stat .ls-ico { font-size: 26px; margin-bottom: 8px; }
+.lp-stat .ls-val { font-size: 22px; font-weight: 800; color: #fff; }
+.lp-stat .ls-lbl { font-size: 11px; color: rgba(255,255,255,.55); margin-top: 3px; font-weight: 500; }
+
+/* ── FEATURES ── */
+.lp-section {
+  position: relative; z-index: 2;
+  max-width: 860px; margin: 0 auto; width: 100%;
+  padding: 0 24px 40px;
+  animation: fadeUp .8s .3s both;
+}
+
+.lp-section-title {
+  text-align: center; margin-bottom: 24px;
+}
+.lp-section-title h2 {
+  font-size: 20px; font-weight: 800; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.lp-section-title p {
+  font-size: 13px; color: rgba(255,255,255,.55); margin-top: 6px;
+}
+
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+
+.feat-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 20px 18px;
+  backdrop-filter: blur(10px);
+  transition: all .2s;
+  position: relative; overflow: hidden;
+}
+.feat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 14px 14px 0 0;
+}
+.feat-card.fc-blue::before { background: linear-gradient(90deg, #1a5ccc, #3b82f6); }
+.feat-card.fc-gold::before { background: linear-gradient(90deg, #c8922a, #ffd96a); }
+.feat-card.fc-green::before { background: linear-gradient(90deg, #1a7a4a, #4ade80); }
+.feat-card.fc-teal::before { background: linear-gradient(90deg, #0d6e8a, #22d3ee); }
+.feat-card.fc-red::before { background: linear-gradient(90deg, #c0392b, #f87171); }
+.feat-card.fc-purple::before { background: linear-gradient(90deg, #6d28d9, #a78bfa); }
+
+.feat-card:hover { background: rgba(255,255,255,.1); transform: translateY(-3px); }
+
+.feat-ico {
+  font-size: 28px; margin-bottom: 12px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.3));
+}
+.feat-card h4 { font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.feat-card p  { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+/* ── GUIDE ── */
+.guide-steps {
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.guide-step {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 16px 20px;
+  backdrop-filter: blur(10px);
+  display: flex; align-items: flex-start; gap: 16px;
+  transition: all .2s;
+}
+.guide-step:hover { background: rgba(255,255,255,.1); }
+
+.gs-num {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a5ccc, #3b82f6);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #fff;
+  box-shadow: 0 3px 10px rgba(26,92,204,.4);
+}
+.gs-text h4 { font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.gs-text p  { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6; }
+.gs-text .gs-tag {
+  display: inline-block; margin-top: 6px;
+  font-size: 10.5px; font-weight: 600;
+  padding: 2px 10px; border-radius: 20px;
+  background: rgba(255,255,255,.1); color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+/* ── GROUPS ── */
+.groups-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+
+.group-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 18px 16px;
+  text-align: center; backdrop-filter: blur(10px);
+  transition: all .2s;
+}
+.group-card:hover { background: rgba(255,255,255,.11); transform: translateY(-2px); }
+.group-card .gc-ico { font-size: 32px; margin-bottom: 10px; }
+.group-card h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.group-card p  { font-size: 11.5px; color: rgba(255,255,255,.55); line-height: 1.6; }
+.group-card .gc-perm {
+  display: flex; flex-direction: column; gap: 4px; margin-top: 10px;
+}
+.gc-perm span {
+  font-size: 10.5px; color: rgba(255,255,255,.65);
+  display: flex; align-items: center; gap: 5px;
+}
+.gc-perm span::before { content: '✓'; color: #4ade80; font-weight: 700; }
+
+/* ── DIVIDER ── */
+.lp-divider {
+  position: relative; z-index: 2;
+  max-width: 860px; margin: 0 auto 32px;
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.lp-divider .dl { flex: 1; height: 1px; background: rgba(255,255,255,.1); }
+.lp-divider span { font-size: 11px; color: rgba(255,255,255,.35); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+
+/* ── FOOTER ── */
+.lp-footer {
+  position: relative; z-index: 2;
+  text-align: center; padding: 0 24px 40px;
+  animation: fadeUp .8s .5s both;
+}
+.lp-footer p { font-size: 12px; color: rgba(255,255,255,.35); }
+.lp-footer strong { color: rgba(255,255,255,.6); }
+
+/* ── DESIGNER CREDIT ── */
+.lp-credit {
+  display: inline-flex; align-items: center; gap: 11px;
+  margin-top: 28px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50px;
+  padding: 8px 18px 8px 10px;
+  backdrop-filter: blur(12px);
+  transition: all .25s;
+}
+.lp-credit:hover {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(200,146,42,.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,.2);
+}
+
+.lp-credit-logo {
+  width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0d2b5e 0%, #1a5ccc 50%, #00c6ff 100%);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 2px 10px rgba(26,92,204,.5),
+    0 0 0 1px rgba(255,255,255,.15),
+    inset 0 1px 0 rgba(255,255,255,.2);
+  animation: cube3d 5s ease-in-out infinite;
+  position: relative; overflow: hidden;
+}
+.lp-credit-logo::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(rgba(255,255,255,.18), transparent);
+  border-radius: 8px 8px 0 0;
+  pointer-events: none;
+}
+.lp-credit-logo svg { width: 20px; height: 20px; position: relative; z-index: 1; }
+
+@keyframes cube3d {
+  0%,100% {
+    transform: perspective(120px) rotateY(0deg) rotateX(0deg);
+    box-shadow: 0 2px 10px rgba(26,92,204,.5), 0 0 0 1px rgba(255,255,255,.15);
+  }
+  20% {
+    transform: perspective(120px) rotateY(12deg) rotateX(-6deg);
+    box-shadow: 5px 5px 18px rgba(26,92,204,.6), 0 0 0 1px rgba(255,255,255,.2);
+  }
+  40% {
+    transform: perspective(120px) rotateY(0deg) rotateX(6deg);
+    box-shadow: 0 8px 20px rgba(0,198,255,.4), 0 0 0 1px rgba(255,255,255,.15);
+  }
+  60% {
+    transform: perspective(120px) rotateY(-12deg) rotateX(-4deg);
+    box-shadow: -5px 5px 18px rgba(200,146,42,.4), 0 0 0 1px rgba(255,255,255,.2);
+  }
+  80% {
+    transform: perspective(120px) rotateY(-4deg) rotateX(3deg);
+    box-shadow: -2px 6px 14px rgba(26,92,204,.5), 0 0 0 1px rgba(255,255,255,.15);
+  }
+}
+
+.lp-credit-info { text-align: left; }
+
+.lp-credit-name {
+  font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,.65);
+  letter-spacing: .3px; white-space: nowrap;
+}
+.lp-credit-name span {
+  background: linear-gradient(90deg, #7eb8ff, #c8e6ff, #ffd96a);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+  font-weight: 800;
+}
+
+.lp-credit-details {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 3px; flex-wrap: wrap;
+}
+.lp-credit-details span {
+  font-size: 10px; color: rgba(255,255,255,.4);
+  font-weight: 500; white-space: nowrap;
+}
+.lp-credit-details .sep { color: rgba(255,255,255,.2); }
+
+/* ── ROLE GUIDE — HORIZONTAL ACCORDION ── */
+.role-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Each accordion row */
+.rbox {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.05);
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+  position: relative;
+}
+.rbox::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+  border-radius: 14px 0 0 14px;
+}
+.rbox-gold::before { background: linear-gradient(180deg,#c8922a,#ffd96a); }
+.rbox-blue::before  { background: linear-gradient(180deg,#1a5ccc,#60a5fa); }
+.rbox-green::before { background: linear-gradient(180deg,#1a7a4a,#4ade80); }
+
+.rbox.open { border-color: rgba(255,255,255,.2); box-shadow: 0 8px 32px rgba(0,0,0,.2); }
+
+/* Clickable header row */
+.rbox-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 18px 13px 22px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .18s;
+}
+.rbox-head:hover { background: rgba(255,255,255,.05); }
+
+.rbox-ico {
+  font-size: 22px; flex-shrink: 0;
+}
+.rbox-title {
+  flex: 1; min-width: 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.rbox-title h4 {
+  font-size: 13.5px; font-weight: 800; color: #fff;
+  white-space: nowrap;
+}
+.rbox-title .rbox-sub {
+  font-size: 10.5px; color: rgba(255,255,255,.4);
+  font-weight: 400;
+}
+.rbox-badge {
+  font-size: 9.5px; font-weight: 700;
+  padding: 2px 10px; border-radius: 20px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.rbb-gold  { background: rgba(200,146,42,.2); color: #fcd34d; border: 1px solid rgba(200,146,42,.35); }
+.rbb-blue  { background: rgba(26,92,204,.2);  color: #93c5fd; border: 1px solid rgba(26,92,204,.35); }
+.rbb-green { background: rgba(26,122,74,.2);  color: #86efac; border: 1px solid rgba(26,122,74,.35); }
+
+.rbox-chevron {
+  font-size: 11px; color: rgba(255,255,255,.4);
+  transition: transform .25s; flex-shrink: 0;
+  margin-left: 4px;
+}
+.rbox.open .rbox-chevron { transform: rotate(180deg); color: rgba(255,255,255,.75); }
+
+/* Collapsible body */
+.rbox-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s cubic-bezier(.4,0,.2,1);
+}
+.rbox.open .rbox-body { max-height: 400px; }
+
+.rbox-divider {
+  height: 1px; margin: 0 18px;
+  background: rgba(255,255,255,.07);
+}
+
+/* Items inside — horizontal chips layout */
+.rbox-list {
+  list-style: none;
+  margin: 0; padding: 14px 18px 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.rbox-list li {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: background .15s;
+}
+.rbox-list li:hover { background: rgba(255,255,255,.08); }
+
+.rli-check {
+  font-size: 14px; flex-shrink: 0; margin-top: 1px;
+}
+.rbox-list li span.rli-text {
+  font-size: 11.5px; font-weight: 600;
+  color: rgba(255,255,255,.8);
+  line-height: 1.35; flex: 1;
+}
+.rbox-list li span.rli-text em {
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(255,255,255,.4);
+  font-size: 10.5px;
+  display: block;
+  margin-top: 1px;
+}
+
+.tag-urgent   { display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(192,57,43,.3);color:#fca5a5;border:1px solid rgba(192,57,43,.4); }
+.tag-important{ display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(200,146,42,.25);color:#fcd34d;border:1px solid rgba(200,146,42,.35); }
+
+/* ── TRANSITION ── */
+#landing.hide {
+  animation: landingOut .6s cubic-bezier(.55,.055,.675,.19) forwards;
+}
+@keyframes landingOut {
+  0% { opacity:1; transform:scale(1); }
+  100% { opacity:0; transform:scale(1.04); pointer-events:none; }
+}
+
+/* ══════════════════════════════════════════ */
+:root {
+  --navy:#0d2b5e;--navy-mid:#164494;--blue:#1a5ccc;--blue-light:#3b82f6;
+  --sky:#e8f0fe;--sky-deep:#c7d9fc;--gold:#c8922a;--gold-light:#fef3e2;
+  --red:#c0392b;--red-light:#fdecea;--green:#1a7a4a;--green-light:#e6f7ee;
+  --teal:#0d6e8a;--teal-light:#e0f4f8;--white:#ffffff;--off-white:#f7f9fe;
+  --border:#dde4f0;--border-mid:#c4d0e8;--text:#0d1b3e;--text-mid:#3a4d72;
+  --text-muted:#7285a8;--shadow-sm:0 1px 4px rgba(13,43,94,.07);
+  --shadow:0 3px 16px rgba(13,43,94,.10);--shadow-lg:0 8px 40px rgba(13,43,94,.16);
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Lexend',sans-serif;background:var(--off-white);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.app{display:flex;height:100vh;overflow:hidden;}
+
+/* SIDEBAR */
+.sidebar{width:264px;flex-shrink:0;background:var(--navy);display:flex;flex-direction:column;height:100vh;position:relative;overflow:hidden;}
+.sidebar::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none;}
+.sidebar::after{content:'';position:absolute;right:-20px;bottom:60px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.03);pointer-events:none;}
+.sb-header{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;}
+.school-seal{display:flex;align-items:center;gap:12px;}
+.seal-icon{width:46px;height:46px;flex-shrink:0;background:linear-gradient(135deg,var(--gold) 0%,#e8b04a 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 12px rgba(200,146,42,.4);border:2px solid rgba(255,255,255,.25);}
+.seal-text h2{font-family:'Libre Baskerville',serif;font-size:13px;font-weight:700;color:#fff;line-height:1.3;}
+.seal-text p{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:2px;font-weight:400;}
+.sb-section-title{font-size:9.5px;letter-spacing:1.5px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;padding:16px 20px 6px;}
+.sb-nav{flex:1;overflow-y:auto;padding:6px 10px;}
+.sb-nav::-webkit-scrollbar{display:none;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;transition:all .18s;color:rgba(255,255,255,.62);font-size:13px;font-weight:500;margin-bottom:1px;user-select:none;}
+.nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);}
+.nav-item.active{background:rgba(255,255,255,.14);color:#fff;}
+.nav-item .ni-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.nav-item .ni-label{flex:1;}
+.nav-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--gold);color:#fff;min-width:20px;text-align:center;}
+.nav-pill.alert{background:var(--red);animation:pill-pulse 2s infinite;}
+@keyframes pill-pulse{0%,100%{opacity:1;}50%{opacity:.7;}}
+.sb-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0;}
+.user-card{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;transition:background .18s;}
+.user-card:hover{background:rgba(255,255,255,.06);}
+.user-ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue-light) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.2);}
+.user-info p{font-size:12.5px;font-weight:600;color:#fff;}
+.user-role{display:inline-block;margin-top:2px;font-size:10px;font-weight:600;padding:1px 8px;border-radius:20px;background:rgba(200,146,42,.25);color:var(--gold);border:1px solid rgba(200,146,42,.3);}
+
+/* CREDIT */
+.sb-credit{
+  padding:10px 14px 14px;
+  flex-shrink:0;
+  display:flex;align-items:center;gap:9px;
+}
+.credit-logo{
+  width:30px;height:30px;flex-shrink:0;
+  border-radius:8px;
+  background:linear-gradient(135deg,#1a5ccc 0%,#00c6ff 50%,#c8922a 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:0 2px 10px rgba(26,92,204,.5), 0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.25);
+  transform-style:preserve-3d;
+  animation:logo3d 4s ease-in-out infinite;
+}
+.credit-logo::before{
+  content:'';
+  position:absolute;inset:0;border-radius:8px;
+  background:linear-gradient(135deg,rgba(255,255,255,.3) 0%,transparent 60%);
+  pointer-events:none;
+}
+.credit-logo svg{width:16px;height:16px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));}
+@keyframes logo3d{
+  0%,100%{transform:perspective(200px) rotateY(0deg) rotateX(0deg);box-shadow:0 2px 10px rgba(26,92,204,.5),0 0 0 1px rgba(255,255,255,.12);}
+  25%{transform:perspective(200px) rotateY(8deg) rotateX(-4deg);box-shadow:4px 4px 16px rgba(26,92,204,.6),0 0 0 1px rgba(255,255,255,.15);}
+  50%{transform:perspective(200px) rotateY(0deg) rotateX(4deg);box-shadow:0 6px 18px rgba(0,198,255,.4),0 0 0 1px rgba(255,255,255,.12);}
+  75%{transform:perspective(200px) rotateY(-8deg) rotateX(-2deg);box-shadow:-4px 4px 16px rgba(200,146,42,.4),0 0 0 1px rgba(255,255,255,.15);}
+}
+.credit-text{min-width:0;}
+.credit-text .ct-name{
+  font-size:10px;font-weight:700;
+  background:linear-gradient(90deg,#7eb8ff,#c8e6ff,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:.3px;
+  white-space:nowrap;
+}
+.credit-text .ct-phone{
+  font-size:9.5px;color:rgba(255,255,255,.4);
+  margin-top:1px;font-weight:400;
+  display:flex;align-items:center;gap:4px;
+}
+
+/* MAIN */
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 28px;height:62px;display:flex;align-items:center;gap:14px;flex-shrink:0;box-shadow:var(--shadow-sm);}
+.page-breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;}
+.page-breadcrumb .crumb{color:var(--text-muted);}
+.page-breadcrumb .sep{color:var(--border-mid);}
+.page-breadcrumb .current{font-weight:700;color:var(--navy);}
+.spacer{flex:1;}
+.search-box{position:relative;width:300px;}
+.search-box input{width:100%;padding:8px 14px 8px 38px;border:1.5px solid var(--border);border-radius:50px;background:var(--off-white);font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:all .2s;}
+.search-box input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(26,92,204,.1);}
+.search-box input::placeholder{color:var(--text-muted);}
+.search-box .s-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;pointer-events:none;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:50px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;border:none;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,var(--blue) 0%,var(--navy-mid) 100%);color:#fff;box-shadow:0 3px 12px rgba(26,92,204,.3);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(26,92,204,.4);}
+.btn-outline{background:#fff;color:var(--text-mid);border:1.5px solid var(--border);}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--sky);}
+.btn-sm{padding:6px 14px;font-size:12px;}
+
+/* SCROLL */
+.scroll-area{flex:1;overflow-y:auto;padding:24px 28px;}
+.scroll-area::-webkit-scrollbar{width:5px;}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:20px;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow-sm);display:flex;align-items:flex-start;gap:14px;transition:all .2s;animation:fadeUp .4s both;}
+.stat-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+.stat-card:nth-child(1){animation-delay:.05s}.stat-card:nth-child(2){animation-delay:.1s}.stat-card:nth-child(3){animation-delay:.15s}.stat-card:nth-child(4){animation-delay:.2s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.stat-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.ico-blue{background:var(--sky)}.ico-gold{background:var(--gold-light)}.ico-green{background:var(--green-light)}.ico-red{background:var(--red-light)}
+.stat-info label{font-size:11.5px;color:var(--text-muted);font-weight:500;}
+.stat-info .val{font-size:28px;font-weight:800;color:var(--navy);line-height:1.1;}
+.stat-info .sub{font-size:11px;color:var(--text-muted);margin-top:1px;}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.toolbar-label{font-size:12px;font-weight:600;color:var(--text-muted);margin-right:4px;}
+.chip{padding:5px 14px;border-radius:50px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .18s;border:1.5px solid var(--border);background:var(--white);color:var(--text-muted);}
+.chip:hover{border-color:var(--blue);color:var(--blue);}
+.chip.active-all{background:var(--navy);color:#fff;border-color:var(--navy);}
+.chip.active-urgent{background:var(--red);color:#fff;border-color:var(--red);}
+.chip.active-important{background:var(--gold);color:#fff;border-color:var(--gold);}
+.chip.active-normal{background:var(--blue);color:#fff;border-color:var(--blue);}
+.chip.active-info{background:var(--teal);color:#fff;border-color:var(--teal);}
+.result-count{margin-left:auto;font-size:12px;color:var(--text-muted);font-weight:500;}
+
+/* NOTICE CARDS */
+.notices-list{display:flex;flex-direction:column;gap:10px;}
+.nc{background:var(--white);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-sm);cursor:pointer;transition:all .2s;display:grid;grid-template-columns:5px 1fr auto;overflow:hidden;animation:fadeUp .35s both;}
+.nc:hover{box-shadow:var(--shadow);transform:translateY(-1px);border-color:var(--border-mid);}
+.nc.unread{background:#fafcff;border-color:#c9d9f8;}
+.nc-stripe{width:5px;flex-shrink:0;}
+.stripe-urgent{background:var(--red)}.stripe-important{background:var(--gold)}.stripe-normal{background:var(--blue)}.stripe-info{background:var(--teal)}
+.nc-body{padding:16px 18px;min-width:0;}
+.nc-meta{display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap;}
+.priority-badge{font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:2px 10px;border-radius:4px;text-transform:uppercase;}
+.pb-urgent{background:var(--red-light);color:var(--red)}.pb-important{background:var(--gold-light);color:var(--gold)}.pb-normal{background:var(--sky);color:var(--blue)}.pb-info{background:var(--teal-light);color:var(--teal)}
+.group-badge{font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:4px;border:1px solid;}
+.gb-all{background:#f0f4ff;color:#3a4d72;border-color:#c4d0e8}.gb-leadership{background:#fff8e6;color:#7a5000;border-color:#f0d080}.gb-subject{background:var(--sky);color:var(--navy-mid);border-color:var(--sky-deep)}.gb-teacher{background:var(--green-light);color:var(--green);border-color:#a0d4b8}
+.nc-title{font-size:14.5px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:5px;}
+.nc.unread .nc-title{color:var(--navy);}
+.nc-excerpt{font-size:12.5px;color:var(--text-muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.nc-foot{display:flex;align-items:center;gap:14px;margin-top:10px;}
+.nc-foot span{font-size:11.5px;color:var(--text-muted);display:flex;align-items:center;gap:4px;}
+.nc-side{padding:14px 16px 14px 8px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.read-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;box-shadow:0 0 0 3px rgba(26,92,204,.15);}
+.read-dot.read{background:transparent;box-shadow:none;}
+.mark-btn{font-size:11.5px;font-weight:600;color:var(--text-muted);background:var(--off-white);border:1px solid var(--border);border-radius:6px;padding:3px 10px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.mark-btn:hover{background:var(--sky);color:var(--blue);border-color:var(--blue);}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted);}
+.empty-state .e-icon{font-size:44px;opacity:.4;margin-bottom:10px;}
+.empty-state p{font-size:14px;}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(13,27,62,.5);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;animation:fadeIn .2s;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:18px;width:100%;max-width:660px;max-height:92vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:modalUp .25s cubic-bezier(.34,1.56,.64,1);}
+.modal::-webkit-scrollbar{width:5px;}
+.modal::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:20px;}
+@keyframes modalUp{from{transform:translateY(24px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal-head{padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;position:sticky;top:0;background:var(--white);border-radius:18px 18px 0 0;z-index:1;}
+.modal-head-ico{width:40px;height:40px;border-radius:10px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.modal-head-text{flex:1;}
+.modal-head-text h3{font-size:17px;font-weight:800;color:var(--navy);}
+.modal-head-text p{font-size:12.5px;color:var(--text-muted);margin-top:2px;}
+.modal-x{width:32px;height:32px;border-radius:50%;border:none;background:var(--off-white);font-size:16px;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.modal-x:hover{background:var(--red-light);color:var(--red);}
+.modal-body{padding:22px 26px;}
+.modal-foot{padding:14px 26px 22px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid var(--border);}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:12.5px;font-weight:700;color:var(--text-mid);margin-bottom:6px;}
+.form-label .req{color:var(--red);margin-left:2px;}
+.form-hint{font-size:11px;color:var(--text-muted);font-weight:400;margin-left:6px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:inherit;font-size:13px;color:var(--text);background:var(--off-white);outline:none;transition:all .2s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(26,92,204,.1);}
+.form-textarea{resize:vertical;min-height:110px;line-height:1.7;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.group-picks{display:flex;gap:8px;flex-wrap:wrap;}
+.gpick{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--off-white);cursor:pointer;transition:all .15s;font-size:12.5px;font-weight:600;color:var(--text-mid);user-select:none;}
+.gpick:hover{border-color:var(--blue);color:var(--blue);background:var(--sky);}
+.gpick input{display:none;}
+.gpick.sel-all{border-color:var(--navy);background:var(--navy);color:#fff;}
+.gpick.sel-leadership{border-color:var(--gold);background:var(--gold-light);color:#7a5000;}
+.gpick.sel-subject{border-color:var(--blue);background:var(--sky);color:var(--navy-mid);}
+.gpick.sel-teacher{border-color:var(--green);background:var(--green-light);color:var(--green);}
+
+/* DETAIL */
+.detail-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;}
+.detail-info-bar{display:flex;flex-wrap:wrap;gap:16px;background:var(--off-white);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 16px;margin-bottom:18px;}
+.dib-item{font-size:12px;color:var(--text-muted);}
+.dib-item strong{color:var(--text-mid);font-weight:600;}
+.dib-item a{color:var(--blue);text-decoration:none;}
+.dib-item a:hover{text-decoration:underline;}
+.detail-body{font-family:'Libre Baskerville',serif;font-size:13.5px;color:var(--text);line-height:1.85;}
+.detail-body p{margin-bottom:10px;}
+
+/* GS MODAL */
+.gs-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--r);padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.gs-hero-ico{font-size:32px;}
+.gs-hero-text h4{font-size:14px;font-weight:700;color:#fff;}
+.gs-hero-text p{font-size:12px;color:rgba(255,255,255,.65);margin-top:3px;line-height:1.5;}
+.step-card{border:1.5px solid var(--border);border-radius:var(--r-sm);padding:16px 18px;margin-bottom:12px;position:relative;}
+.step-num{position:absolute;top:-1px;left:16px;transform:translateY(-50%);background:var(--white);padding:0 8px;font-size:10px;font-weight:800;letter-spacing:.5px;color:var(--blue);text-transform:uppercase;}
+.step-card h5{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.step-card p{font-size:12.5px;color:var(--text-mid);line-height:1.65;}
+.code-block{background:#0d1b3e;border-radius:var(--r-sm);padding:14px 16px;margin-top:10px;overflow-x:auto;}
+.code-block pre{font-family:'Courier New',monospace;font-size:11.5px;color:#93c5fd;line-height:1.7;white-space:pre-wrap;word-break:break-all;}
+.url-row{display:flex;gap:8px;margin-top:10px;}
+.url-row input{flex:1;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:inherit;font-size:12.5px;outline:none;transition:all .2s;color:var(--text);}
+.url-row input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,92,204,.1);}
+.url-row input::placeholder{color:var(--text-muted);}
+.gs-status{display:none;margin-top:10px;padding:10px 14px;border-radius:var(--r-sm);font-size:12.5px;font-weight:600;}
+.gs-status.ok{background:var(--green-light);color:var(--green);border:1px solid #a0d4b8;}
+.gs-status.err{background:var(--red-light);color:var(--red);border:1px solid #f5c6c2;}
+
+/* SETUP BANNER */
+.setup-banner{background:linear-gradient(135deg,#f0f5ff 0%,#e8f0fe 100%);border:1.5px solid var(--sky-deep);border-radius:var(--r);padding:14px 20px;display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.setup-banner .sb-ico{font-size:26px;flex-shrink:0;}
+.setup-banner .sb-txt h4{font-size:13px;font-weight:700;color:var(--navy);}
+.setup-banner .sb-txt p{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.setup-banner .sb-actions{margin-left:auto;display:flex;gap:8px;flex-shrink:0;}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.section-head h3{font-size:15px;font-weight:800;color:var(--navy);}
+.section-head .line{flex:1;height:1px;background:var(--border);}
+
+/* TOAST */
+.toasts{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast{padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;box-shadow:0 6px 24px rgba(0,0,0,.18);animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);max-width:340px;pointer-events:all;}
+@keyframes toastIn{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast-ok{background:var(--navy);color:#fff}.toast-good{background:var(--green);color:#fff}.toast-err{background:var(--red);color:#fff}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:960px){.sidebar{width:220px}.stats-row{grid-template-columns:repeat(2,1fr)}}
+
+/* ══ TOOL PANELS ══ */
+.tool-panel { animation: fadeUp .35s both; }
+
+.tp-header {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 18px 22px;
+  margin-bottom: 18px; box-shadow: var(--shadow-sm);
+}
+.tp-header-ico {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.tp-header h3 { font-size: 16px; font-weight: 800; color: var(--navy); }
+.tp-header p  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.tp-header .btn { margin-left: auto; flex-shrink: 0; }
+
+/* ── Month / Week nav ── */
+.tp-month-nav, .tp-week-nav {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.tp-nav-btn {
+  padding: 6px 14px; border-radius: 50px;
+  border: 1.5px solid var(--border); background: var(--white);
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--text-mid); cursor: pointer; transition: all .18s;
+}
+.tp-nav-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--sky); }
+.tp-month-label {
+  font-size: 15px; font-weight: 800; color: var(--navy); flex: 1; text-align: center;
+}
+
+/* ── CALENDAR ── */
+.tp-calendar {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+  box-shadow: var(--shadow-sm); margin-bottom: 18px;
+}
+.cal-weekdays {
+  display: grid; grid-template-columns: repeat(7,1fr);
+  background: var(--navy);
+}
+.cal-weekdays span {
+  text-align: center; padding: 10px 4px;
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,.7);
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.cal-days {
+  display: grid; grid-template-columns: repeat(7,1fr);
+}
+.cal-day {
+  min-height: 68px; padding: 8px 6px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background .15s;
+  position: relative;
+}
+.cal-day:nth-child(7n) { border-right: none; }
+.cal-day:hover { background: var(--sky); }
+.cal-day.today { background: #eff6ff; }
+.cal-day.today .cal-day-num { background: var(--blue); color: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.cal-day.other-month .cal-day-num { color: var(--border-mid); }
+.cal-day.has-event::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+.cal-day-num { font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.cal-event-dot { font-size: 9px; color: var(--blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.4; }
+
+/* ── EVENT LIST ── */
+.tp-event-list { display: flex; flex-direction: column; gap: 10px; }
+.event-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 18px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: var(--shadow-sm); cursor: pointer; transition: all .18s;
+}
+.event-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.ev-date-box {
+  width: 48px; flex-shrink: 0; text-align: center;
+  background: var(--sky); border-radius: var(--r-sm); padding: 8px 4px;
+  border: 1.5px solid var(--sky-deep);
+}
+.ev-date-box .ev-day { font-size: 20px; font-weight: 800; color: var(--blue); line-height: 1; }
+.ev-date-box .ev-month { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+.ev-info h4 { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.ev-info p  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.ev-badge {
+  margin-left: auto; font-size: 10.5px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; flex-shrink: 0;
+}
+.ev-school  { background: var(--sky); color: var(--blue); }
+.ev-holiday { background: var(--green-light); color: var(--green); }
+.ev-meeting { background: var(--gold-light); color: var(--gold); }
+.ev-other   { background: var(--teal-light); color: var(--teal); }
+.ev-del { padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--white); color: var(--text-muted); font-size: 12px; cursor: pointer; transition: all .15s; margin-left: 8px; }
+.ev-del:hover { background: var(--red-light); color: var(--red); border-color: var(--red); }
+
+/* ── WEEK GRID ── */
+.tp-week-grid {
+  display: grid; grid-template-columns: repeat(6,1fr); gap: 10px;
+}
+.week-col {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+  box-shadow: var(--shadow-sm); min-height: 220px;
+}
+.week-col-head {
+  padding: 10px; text-align: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--off-white);
+}
+.week-col.today-col .week-col-head { background: var(--navy); }
+.week-col.today-col .wch-day { color: #fff; }
+.week-col.today-col .wch-date { color: rgba(255,255,255,.7); }
+.wch-day  { font-size: 11px; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: .5px; }
+.wch-date { font-size: 18px; font-weight: 800; color: var(--navy); }
+.week-tasks { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.wtask {
+  padding: 7px 9px; border-radius: 7px;
+  font-size: 11.5px; font-weight: 600; color: var(--text);
+  border-left: 3px solid; cursor: pointer; line-height: 1.4;
+  transition: all .15s; position: relative;
+}
+.wtask:hover { opacity: .85; }
+.wtask .wtask-del { display: none; position: absolute; top: 4px; right: 4px; font-size: 10px; color: var(--text-muted); }
+.wtask:hover .wtask-del { display: block; }
+.wtask-blue   { background: #eff6ff; border-color: var(--blue); }
+.wtask-gold   { background: var(--gold-light); border-color: var(--gold); }
+.wtask-green  { background: var(--green-light); border-color: var(--green); }
+.wtask-red    { background: var(--red-light); border-color: var(--red); }
+.wtask-teal   { background: var(--teal-light); border-color: var(--teal); }
+.add-task-btn {
+  margin: 6px 8px 8px; width: calc(100% - 16px);
+  padding: 5px; border: 1.5px dashed var(--border-mid);
+  border-radius: 7px; background: transparent;
+  font-size: 11px; color: var(--text-muted); cursor: pointer;
+  font-family: inherit; transition: all .15s;
+}
+.add-task-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--sky); }
+
+/* ── DOCS ── */
+.tp-doc-cats {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.doc-cat {
+  padding: 6px 16px; border-radius: 50px;
+  font-family: inherit; font-size: 12.5px; font-weight: 600;
+  border: 1.5px solid var(--border); background: var(--white);
+  color: var(--text-muted); cursor: pointer; transition: all .18s;
+}
+.doc-cat:hover  { border-color: var(--blue); color: var(--blue); }
+.doc-cat.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.tp-doc-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 12px;
+}
+.doc-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 16px 18px;
+  box-shadow: var(--shadow-sm); cursor: pointer;
+  transition: all .2s; display: flex; align-items: flex-start; gap: 12px;
+}
+.doc-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-color: var(--border-mid); }
+.doc-ico {
+  width: 42px; height: 42px; flex-shrink: 0;
+  border-radius: 9px; display: flex; align-items: center;
+  justify-content: center; font-size: 20px;
+}
+.doc-ico-blue  { background: var(--sky); }
+.doc-ico-gold  { background: var(--gold-light); }
+.doc-ico-green { background: var(--green-light); }
+.doc-ico-teal  { background: var(--teal-light); }
+.doc-ico-red   { background: var(--red-light); }
+.doc-info { flex: 1; min-width: 0; }
+.doc-info h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.doc-info p  { font-size: 11.5px; color: var(--text-muted); }
+.doc-meta { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.doc-tag {
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 4px; background: var(--sky); color: var(--blue);
+}
+.doc-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+.doc-btn {
+  padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  border: 1px solid var(--border); background: var(--white);
+  color: var(--text-muted); cursor: pointer; font-family: inherit;
+  transition: all .15s; white-space: nowrap;
+}
+.doc-btn:hover { background: var(--sky); color: var(--blue); border-color: var(--blue); }
+.doc-btn.del:hover { background: var(--red-light); color: var(--red); border-color: var(--red); }
+.doc-empty { grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted); }
+.doc-empty .e-icon { font-size: 36px; opacity: .35; margin-bottom: 8px; }
+
+/* ── INLINE MINI FORM (add event/task/doc) ── */
+.inline-form {
+  background: var(--white); border: 1.5px solid var(--blue);
+  border-radius: var(--r); padding: 16px 18px;
+  margin-bottom: 16px; box-shadow: 0 0 0 3px rgba(26,92,204,.08);
+  animation: fadeUp .25s both;
+}
+.inline-form h4 { font-size: 13px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+.inline-form .if-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.inline-form .if-row .form-input,
+.inline-form .if-row .form-select { flex: 1; min-width: 130px; }
+.if-actions { display: flex; gap: 8px; }
+
+/* ══════════════════════════════════════
+   BGH ADMIN PANELS
+══════════════════════════════════════ */
+
+/* KPI Grid */
+.bgh-dash-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+  margin-bottom: 16px;
+}
+.bgh-kpi {
+  border-radius: var(--r); padding: 18px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+  text-align: center;
+}
+.bgh-kpi-ico { font-size: 24px; }
+.bgh-kpi-val { font-size: 32px; font-weight: 900; line-height: 1; color: var(--navy); }
+.bgh-kpi-lbl { font-size: 11.5px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+.bgh-kpi-blue  { background: var(--sky); border-color: rgba(26,92,204,.15); }
+.bgh-kpi-red   { background: var(--red-light); border-color: rgba(192,57,43,.15); }
+.bgh-kpi-gold  { background: var(--gold-light); border-color: rgba(200,146,42,.15); }
+.bgh-kpi-green { background: var(--green-light); border-color: rgba(26,122,74,.15); }
+
+/* Two col */
+.bgh-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Card */
+.bgh-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.bgh-card-head {
+  font-size: 13px; font-weight: 800; color: var(--navy);
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Bar chart rows */
+.bgh-bar-list { display: flex; flex-direction: column; gap: 10px; }
+.bgh-bar-row { display: flex; align-items: center; gap: 10px; }
+.bgh-bar-lbl { font-size: 12px; color: var(--text-muted); font-weight: 600; width: 100px; flex-shrink: 0; }
+.bgh-bar-track { flex: 1; height: 8px; background: var(--off-white); border-radius: 4px; overflow: hidden; }
+.bgh-bar-fill { height: 100%; border-radius: 4px; transition: width .6s ease; }
+.bgh-bar-num { font-size: 12px; font-weight: 700; color: var(--navy); width: 24px; text-align: right; }
+
+/* Recent list */
+.bgh-recent-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.bgh-recent-item:last-child { border-bottom: none; }
+.bgh-recent-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+.bgh-recent-title { flex: 1; font-size: 13px; font-weight: 600; color: var(--text); }
+.bgh-recent-date { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Filter row */
+.bgh-filter-row {
+  display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
+}
+.bgh-filter-sel { min-width: 160px; }
+
+/* Notice table */
+.bgh-notice-table { display: flex; flex-direction: column; gap: 8px; }
+.bgh-notice-row {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-sm); transition: all .18s;
+}
+.bgh-notice-row:hover { box-shadow: var(--shadow); border-color: var(--border-mid); }
+.bgh-nr-stripe { width: 4px; height: 40px; border-radius: 2px; flex-shrink: 0; }
+.bgh-nr-info { flex: 1; min-width: 0; }
+.bgh-nr-info h4 { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bgh-nr-info p  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.bgh-nr-badges { display: flex; gap: 6px; flex-shrink: 0; }
+.bgh-nr-act { display: flex; gap: 6px; flex-shrink: 0; }
+.bgh-act-btn {
+  padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  border: 1px solid var(--border); background: var(--white);
+  color: var(--text-muted); cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.bgh-act-btn:hover { background: var(--sky); color: var(--blue); border-color: var(--blue); }
+.bgh-act-btn.del:hover { background: var(--red-light); color: var(--red); border-color: var(--red); }
+.bgh-empty { text-align: center; padding: 40px; color: var(--text-muted); }
+.bgh-empty .e-icon { font-size: 36px; opacity: .35; margin-bottom: 8px; }
+
+/* Teacher list */
+.bgh-teacher-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.bgh-teacher-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 16px;
+  box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 12px;
+  transition: all .18s;
+}
+.bgh-teacher-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.bgh-tc-ava {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.bgh-tc-info { flex: 1; min-width: 0; }
+.bgh-tc-info h4 { font-size: 12.5px; font-weight: 700; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bgh-tc-info p  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.bgh-tc-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--sky); color: var(--blue); margin-top: 5px; display: inline-block; }
+.bgh-tc-del { padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--white); color: var(--text-muted); font-size: 11px; cursor: pointer; transition: all .15s; }
+.bgh-tc-del:hover { background: var(--red-light); color: var(--red); border-color: var(--red); }
+
+/* Export cards */
+.bgh-export-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+.bgh-export-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 22px;
+  box-shadow: var(--shadow-sm); text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  transition: all .2s;
+}
+.bgh-export-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.bgh-export-ico { font-size: 36px; }
+.bgh-export-card h4 { font-size: 14px; font-weight: 800; color: var(--navy); }
+.bgh-export-card p  { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LANDING PAGE ═══════════════ -->
+<div id="landing">
+
+  <!-- HERO -->
+  <div class="lp-hero">
+    <div class="lp-badge">
+      <span class="dot"></span>
+      HỆ THỐNG ĐANG HOẠT ĐỘNG
+    </div>
+    <div class="lp-school-icon"><img src="data:image/jpeg;base64,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" alt="Logo Trường THCS Võ Thị Sáu"></div>
+    <p class="lp-school-name">TRƯỜNG THCS VÕ THỊ SÁU</p>
+    <h1 class="lp-title">
+      THÔNG TIN <span>NỘI BỘ</span>
+    </h1>
+  </div>
+
+
+  <!-- DIVIDER -->
+  <div class="lp-divider">
+    <div class="dl"></div>
+    <span>✦ Hướng dẫn theo từng đối tượng</span>
+    <div class="dl"></div>
+  </div>
+
+  <!-- ROLE GUIDES — ACCORDION -->
+  <div class="lp-section">
+    <div class="role-boxes">
+
+      <!-- LÃNH ĐẠO -->
+      <div class="rbox rbox-gold" id="acc-leadership">
+        <div class="rbox-head" onclick="toggleAcc('leadership')">
+          <span class="rbox-ico">👑</span>
+          <div class="rbox-title">
+            <h4>Lãnh đạo trường</h4>
+            <span class="rbox-sub">Hiệu trưởng · Phó Hiệu trưởng</span>
+          </div>
+          <span class="rbox-badge rbb-gold">Toàn quyền</span>
+          <span class="rbox-chevron">▼</span>
+        </div>
+        <div class="rbox-body">
+          <div class="rbox-divider"></div>
+          <ul class="rbox-list">
+            <li><span class="rli-check">📢</span><span class="rli-text">Tạo & gửi thông báo<em>✏️ Tạo → chọn nhóm → 📤 Gửi</em></span></li>
+            <li><span class="rli-check">👥</span><span class="rli-text">Gửi riêng từng bộ phận<em>Chọn nhóm cụ thể khi soạn</em></span></li>
+            <li><span class="rli-check">✏️</span><span class="rli-text">Chỉnh sửa đã gửi<em>Mở → Chỉnh sửa → Lưu</em></span></li>
+            <li><span class="rli-check">📊</span><span class="rli-text">Quản lý & xuất Sheet<em>Lọc theo ngày, xuất báo cáo</em></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- TỔ CHUYÊN MÔN -->
+      <div class="rbox rbox-blue" id="acc-subject">
+        <div class="rbox-head" onclick="toggleAcc('subject')">
+          <span class="rbox-ico">📚</span>
+          <div class="rbox-title">
+            <h4>Tổ chuyên môn</h4>
+            <span class="rbox-sub">Tổ trưởng · Tổ phó · Nhóm môn</span>
+          </div>
+          <span class="rbox-badge rbb-blue">Quyền tổ</span>
+          <span class="rbox-chevron">▼</span>
+        </div>
+        <div class="rbox-body">
+          <div class="rbox-divider"></div>
+          <ul class="rbox-list">
+            <li><span class="rli-check">📬</span><span class="rli-text">Nhận thông báo từ BGH<em>📊 Đồng bộ Sheet → hiện ngay</em></span></li>
+            <li><span class="rli-check">📝</span><span class="rli-text">Tạo thông báo nội bộ tổ<em>Chọn nhóm Tổ CM → 📤 Gửi</em></span></li>
+            <li><span class="rli-check">🚨</span><span class="rli-text">Xem thông báo khẩn cấp<em>Sidebar → 🚨 · Badge đỏ nhắc</em></span></li>
+            <li><span class="rli-check">✅</span><span class="rli-text">Đánh dấu đã xử lý<em>✓ Đọc · Thống kê tự cập nhật</em></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- GIÁO VIÊN -->
+      <div class="rbox rbox-green" id="acc-teacher">
+        <div class="rbox-head" onclick="toggleAcc('teacher')">
+          <span class="rbox-ico">👩‍🏫</span>
+          <div class="rbox-title">
+            <h4>Giáo viên</h4>
+            <span class="rbox-sub">Toàn thể giáo viên trong trường</span>
+          </div>
+          <span class="rbox-badge rbb-green">Xem & tương tác</span>
+          <span class="rbox-chevron">▼</span>
+        </div>
+        <div class="rbox-body">
+          <div class="rbox-divider"></div>
+          <ul class="rbox-list">
+            <li><span class="rli-check">🔄</span><span class="rli-text">Đồng bộ mỗi ngày<em>Nhấn 📊 Đồng bộ Sheet mỗi sáng</em></span></li>
+            <li><span class="rli-check">📖</span><span class="rli-text">Xem theo nhóm<em>Sidebar → 👩‍🏫 GV hoặc 📋 Tất cả</em></span></li>
+            <li><span class="rli-check">🔍</span><span class="rli-text">Tìm kiếm & lọc nhanh<em>Gõ từ khóa · Chip lọc mức độ</em></span></li>
+            <li><span class="rli-check">📋</span><span class="rli-text">Xem chi tiết & đánh dấu<em>Nhấn thẻ → Đọc → ✓ Đánh dấu</em></span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="lp-footer">
+    <button class="lp-enter-btn" onclick="enterApp()" style="margin-bottom:20px;">
+      Vào Hệ Thống Ngay <span class="arrow">→</span>
+    </button>
+    <p style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <span>📅 Năm học</span>
+      <select id="school-year-select" onchange="updateSchoolYear(this.value)" style="
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.25);
+        color: #fff;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        outline: none;
+        appearance: auto;
+      ">
+        <option value="2025-2026">2025 – 2026</option>
+        <option value="2026-2027">2026 – 2027</option>
+        <option value="2027-2028">2027 – 2028</option>
+        <option value="2028-2029">2028 – 2029</option>
+        <option value="2029-2030">2029 – 2030</option>
+        <option value="2030-2031">2030 – 2031</option>
+      </select>
+    </p>
+    <p style="margin-top:6px;">Hệ thống Thông Báo Nội Bộ · Phiên bản 1.0</p>
+
+    <!-- DESIGNER CREDIT -->
+    <div class="lp-credit">
+      <div class="lp-credit-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3b82f6"/>
+              <stop offset="50%" stop-color="#00c6ff"/>
+              <stop offset="100%" stop-color="#c8922a"/>
+            </linearGradient>
+            <linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0.5)"/>
+            </linearGradient>
+          </defs>
+          <!-- Base cube face top -->
+          <polygon points="16,4 28,10 16,16 4,10" fill="url(#lg2)" opacity=".95"/>
+          <!-- Base cube face right -->
+          <polygon points="28,10 28,22 16,28 16,16" fill="url(#lg1)" opacity=".85"/>
+          <!-- Base cube face left -->
+          <polygon points="4,10 16,16 16,28 4,22" fill="#1a5ccc" opacity=".75"/>
+          <!-- Shine overlay top -->
+          <polygon points="16,4 28,10 16,16 4,10" fill="rgba(255,255,255,0.15)"/>
+        </svg>
+      </div>
+      <div class="lp-credit-info">
+        <div class="lp-credit-name">✦ Thiết kế bởi <span>NGUYEN THANH LIEM</span></div>
+        <div class="lp-credit-details">
+          <span>📱 0815 899 878</span>
+          <span class="sep">·</span>
+          <span>✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1779637b7e727a39742561636464767372745773787970637f766739727362396179">[email&#160;protected]</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ═══════════════ END LANDING ═══════════════ -->
+
+<div class="app" id="main-app" style="display:none;">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-header">
+    <div class="school-seal">
+      <div class="seal-icon">🏫</div>
+      <div class="seal-text">
+        <h2>Trường THCS<br>Võ Thị Sáu</h2>
+        <p>Hệ thống thông báo nội bộ</p>
+      </div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section-title">Thông báo</div>
+    <div class="nav-item active" data-view="all">
+      <span class="ni-icon">📋</span><span class="ni-label">Tất cả thông báo</span>
+      <span class="nav-pill alert" id="badge-all">0</span>
+    </div>
+    <div class="nav-item" data-view="urgent">
+      <span class="ni-icon">🚨</span><span class="ni-label">Khẩn cấp</span>
+    </div>
+    <div class="nav-item" data-view="important">
+      <span class="ni-icon">⭐</span><span class="ni-label">Quan trọng</span>
+    </div>
+    <div class="sb-section-title">Nhóm đối tượng</div>
+    <div class="nav-item" data-group="leadership">
+      <span class="ni-icon">👑</span><span class="ni-label">Lãnh đạo trường</span>
+    </div>
+    <div class="nav-item" data-group="subject">
+      <span class="ni-icon">📚</span><span class="ni-label">Tổ chuyên môn</span>
+    </div>
+    <div class="nav-item" data-group="teacher">
+      <span class="ni-icon">👩‍🏫</span><span class="ni-label">Giáo viên</span>
+    </div>
+    <div class="sb-section-title">Hệ thống</div>
+    <div class="nav-item" id="gs-nav-btn">
+      <span class="ni-icon">📊</span><span class="ni-label">Google Sheet</span>
+    </div>
+    <div class="sb-section-title">Công cụ</div>
+    <div class="nav-item" id="nav-events" onclick="openPanel('events')">
+      <span class="ni-icon">📅</span><span class="ni-label">Lịch sự kiện</span>
+    </div>
+    <div class="nav-item" id="nav-weekplan" onclick="openPanel('weekplan')">
+      <span class="ni-icon">🗓️</span><span class="ni-label">Kế hoạch tuần</span>
+    </div>
+    <div class="nav-item" id="nav-docs" onclick="openPanel('docs')">
+      <span class="ni-icon">📁</span><span class="ni-label">Tài liệu</span>
+    </div>
+    <div class="sb-section-title" style="color:#fcd34d;border-color:rgba(200,146,42,.3)">⚙️ Quản trị BGH</div>
+    <div class="nav-item" id="nav-bgh-dashboard" onclick="openPanel('bgh-dashboard')">
+      <span class="ni-icon">📊</span><span class="ni-label">Tổng quan</span>
+    </div>
+    <div class="nav-item" id="nav-bgh-notices" onclick="openPanel('bgh-notices')">
+      <span class="ni-icon">📋</span><span class="ni-label">Quản lý thông báo</span>
+    </div>
+    <div class="nav-item" id="nav-bgh-teachers" onclick="openPanel('bgh-teachers')">
+      <span class="ni-icon">👥</span><span class="ni-label">Danh sách giáo viên</span>
+    </div>
+    <div class="nav-item" id="nav-bgh-export" onclick="openPanel('bgh-export')">
+      <span class="ni-icon">📤</span><span class="ni-label">Xuất báo cáo</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <div class="user-card">
+      <div class="user-ava">NL</div>
+      <div class="user-info">
+        <p>Nguyễn Thanh Liêm</p>
+        <span class="user-role">👩‍🏫 Giáo viên</span>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div class="page-breadcrumb">
+      <span class="crumb">Trường THCS Võ Thị Sáu</span>
+      <span class="sep">›</span>
+      <span class="current" id="page-title">Tất cả thông báo</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="search-box">
+      <span class="s-icon">🔍</span>
+      <input type="text" id="search-inp" placeholder="Tìm kiếm thông báo..." oninput="doSearch()">
+    </div>
+    <button class="btn btn-outline" id="sync-btn" onclick="syncSheet()">📊 Đồng bộ Sheet</button>
+    <button class="btn btn-primary" onclick="openCreate()">✏️ Tạo thông báo</button>
+  </header>
+
+  <div class="scroll-area">
+    <div class="setup-banner" id="setup-banner">
+      <div class="sb-ico">📊</div>
+      <div class="sb-txt">
+        <h4>Chưa kết nối Google Sheet</h4>
+        <p>Đồng bộ thông báo lên Google Sheets để chia sẻ dữ liệu toàn trường theo thời gian thực.</p>
+      </div>
+      <div class="sb-actions">
+        <button class="btn btn-outline btn-sm" onclick="openGS()">⚙️ Cài đặt kết nối</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-ico ico-blue">📋</div>
+        <div class="stat-info"><label>Tổng thông báo</label><div class="val" id="s-total">0</div><div class="sub">Năm học 2024-2025</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-ico ico-gold">🔔</div>
+        <div class="stat-info"><label>Chưa đọc</label><div class="val" id="s-unread">0</div><div class="sub">Cần xem ngay</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-ico ico-green">✅</div>
+        <div class="stat-info"><label>Đã đọc</label><div class="val" id="s-read">0</div><div class="sub">Đã xử lý</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-ico ico-red">🚨</div>
+        <div class="stat-info"><label>Khẩn cấp</label><div class="val" id="s-urgent">0</div><div class="sub">Ưu tiên cao</div></div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h3 id="section-heading">Tất cả thông báo</h3>
+      <div class="line"></div>
+    </div>
+
+    <div class="toolbar">
+      <span class="toolbar-label">Lọc:</span>
+      <button class="chip active-all" data-chip="all">Tất cả</button>
+      <button class="chip" data-chip="urgent">🚨 Khẩn cấp</button>
+      <button class="chip" data-chip="important">⭐ Quan trọng</button>
+      <button class="chip" data-chip="normal">📌 Thông thường</button>
+      <button class="chip" data-chip="info">ℹ️ Thông tin</button>
+      <span class="result-count" id="rc"></span>
+    </div>
+
+    <div class="notices-list" id="notices-list"></div>
+
+    <!-- PANEL: LỊCH SỰ KIỆN -->
+    <div id="panel-events" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--sky)">📅</div>
+        <div>
+          <h3>Lịch sự kiện</h3>
+          <p>Các sự kiện, ngày kỷ niệm và hoạt động của trường</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openAddEvent()">+ Thêm sự kiện</button>
+      </div>
+      <div class="tp-month-nav">
+        <button class="tp-nav-btn" onclick="changeMonth(-1)">‹</button>
+        <span id="month-label" class="tp-month-label"></span>
+        <button class="tp-nav-btn" onclick="changeMonth(1)">›</button>
+      </div>
+      <div class="tp-calendar" id="tp-calendar"></div>
+      <div class="tp-event-list" id="tp-event-list"></div>
+    </div>
+
+    <!-- PANEL: KẾ HOẠCH TUẦN -->
+    <div id="panel-weekplan" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--gold-light)">🗓️</div>
+        <div>
+          <h3>Kế hoạch tuần</h3>
+          <p>Lịch công việc và nhiệm vụ theo từng ngày trong tuần</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openAddTask()">+ Thêm nhiệm vụ</button>
+      </div>
+      <div class="tp-week-nav">
+        <button class="tp-nav-btn" onclick="changeWeek(-1)">‹ Tuần trước</button>
+        <span id="week-label" class="tp-month-label"></span>
+        <button class="tp-nav-btn" onclick="changeWeek(1)">Tuần sau ›</button>
+      </div>
+      <div class="tp-week-grid" id="tp-week-grid"></div>
+    </div>
+
+    <!-- PANEL: TÀI LIỆU -->
+    <div id="panel-docs" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--teal-light)">📁</div>
+        <div>
+          <h3>Tài liệu</h3>
+          <p>Lưu trữ và chia sẻ tài liệu nội bộ toàn trường</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openAddDoc()">+ Thêm tài liệu</button>
+      </div>
+      <div class="tp-doc-cats" id="tp-doc-cats">
+        <button class="doc-cat active" data-cat="all" onclick="filterDocs(this,'all')">📋 Tất cả</button>
+        <button class="doc-cat" data-cat="official" onclick="filterDocs(this,'official')">📜 Văn bản</button>
+        <button class="doc-cat" data-cat="form" onclick="filterDocs(this,'form')">📝 Biểu mẫu</button>
+        <button class="doc-cat" data-cat="plan" onclick="filterDocs(this,'plan')">📌 Kế hoạch</button>
+        <button class="doc-cat" data-cat="other" onclick="filterDocs(this,'other')">📦 Khác</button>
+      </div>
+      <div class="tp-doc-grid" id="tp-doc-grid"></div>
+    </div>
+
+    <!-- ══ PANEL: BGH DASHBOARD ══ -->
+    <div id="panel-bgh-dashboard" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--gold-light)">📊</div>
+        <div><h3>Tổng quan hệ thống</h3><p>Thống kê toàn trường theo thời gian thực</p></div>
+      </div>
+      <div class="bgh-dash-grid">
+        <div class="bgh-kpi bgh-kpi-blue"><div class="bgh-kpi-ico">📋</div><div class="bgh-kpi-val" id="bgh-total">0</div><div class="bgh-kpi-lbl">Tổng thông báo</div></div>
+        <div class="bgh-kpi bgh-kpi-red"><div class="bgh-kpi-ico">🔔</div><div class="bgh-kpi-val" id="bgh-unread">0</div><div class="bgh-kpi-lbl">Chưa đọc</div></div>
+        <div class="bgh-kpi bgh-kpi-gold"><div class="bgh-kpi-ico">🚨</div><div class="bgh-kpi-val" id="bgh-urgent">0</div><div class="bgh-kpi-lbl">Khẩn cấp</div></div>
+        <div class="bgh-kpi bgh-kpi-green"><div class="bgh-kpi-ico">👥</div><div class="bgh-kpi-val" id="bgh-teachers-count">0</div><div class="bgh-kpi-lbl">Giáo viên</div></div>
+      </div>
+      <div class="bgh-two-col">
+        <div class="bgh-card">
+          <div class="bgh-card-head">📈 Thông báo theo mức độ</div>
+          <div class="bgh-bar-list" id="bgh-prio-bars"></div>
+        </div>
+        <div class="bgh-card">
+          <div class="bgh-card-head">👥 Thông báo theo nhóm</div>
+          <div class="bgh-bar-list" id="bgh-group-bars"></div>
+        </div>
+      </div>
+      <div class="bgh-card" style="margin-top:14px">
+        <div class="bgh-card-head">🕐 5 thông báo mới nhất</div>
+        <div id="bgh-recent-list"></div>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: BGH QUẢN LÝ THÔNG BÁO ══ -->
+    <div id="panel-bgh-notices" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--sky)">📋</div>
+        <div><h3>Quản lý thông báo</h3><p>Xem, duyệt, chỉnh sửa và xoá tất cả thông báo</p></div>
+        <button class="btn btn-primary btn-sm" onclick="openCreate()">✏️ Tạo mới</button>
+      </div>
+      <div class="bgh-filter-row">
+        <select class="form-select bgh-filter-sel" id="bgh-filter-prio" onchange="renderBghNotices()">
+          <option value="">Tất cả mức độ</option>
+          <option value="urgent">🚨 Khẩn cấp</option>
+          <option value="important">⭐ Quan trọng</option>
+          <option value="normal">📌 Thông thường</option>
+          <option value="info">ℹ️ Thông tin</option>
+        </select>
+        <select class="form-select bgh-filter-sel" id="bgh-filter-group" onchange="renderBghNotices()">
+          <option value="">Tất cả nhóm</option>
+          <option value="leadership">👑 Lãnh đạo</option>
+          <option value="subject">📚 Tổ chuyên môn</option>
+          <option value="teacher">👩‍🏫 Giáo viên</option>
+          <option value="all">🏫 Toàn trường</option>
+        </select>
+        <input type="text" class="form-input bgh-filter-sel" id="bgh-search-notice" placeholder="🔍 Tìm thông báo..." oninput="renderBghNotices()" style="flex:2">
+      </div>
+      <div class="bgh-notice-table" id="bgh-notice-table"></div>
+    </div>
+
+    <!-- ══ PANEL: BGH DANH SÁCH GIÁO VIÊN ══ -->
+    <div id="panel-bgh-teachers" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--green-light)">👥</div>
+        <div><h3>Danh sách giáo viên</h3><p>Quản lý thông tin cán bộ giáo viên toàn trường</p></div>
+        <button class="btn btn-primary btn-sm" onclick="openAddTeacher()">+ Thêm giáo viên</button>
+      </div>
+      <div class="bgh-filter-row">
+        <select class="form-select bgh-filter-sel" id="bgh-filter-to" onchange="renderTeachers()">
+          <option value="">Tất cả tổ</option>
+          <option value="BGH">Ban Giám Hiệu</option>
+          <option value="Toán">Tổ Toán – Lý – Tin</option>
+          <option value="Văn">Tổ Văn – Sử – Địa</option>
+          <option value="Anh">Tổ Tiếng Anh</option>
+          <option value="Lý">Tổ KHTN</option>
+          <option value="Thể">Tổ Thể dục – Nghệ thuật</option>
+          <option value="Khác">Bộ phận khác</option>
+        </select>
+        <input type="text" class="form-input bgh-filter-sel" id="bgh-search-teacher" placeholder="🔍 Tìm theo tên..." oninput="renderTeachers()" style="flex:2">
+      </div>
+      <div id="bgh-teacher-list"></div>
+    </div>
+
+    <!-- ══ PANEL: BGH XUẤT BÁO CÁO ══ -->
+    <div id="panel-bgh-export" class="tool-panel" style="display:none">
+      <div class="tp-header">
+        <div class="tp-header-ico" style="background:var(--teal-light)">📤</div>
+        <div><h3>Xuất báo cáo</h3><p>Tải báo cáo thông báo và danh sách giáo viên</p></div>
+      </div>
+      <div class="bgh-export-grid">
+        <div class="bgh-export-card">
+          <div class="bgh-export-ico">📄</div>
+          <h4>Báo cáo thông báo (CSV)</h4>
+          <p>Toàn bộ danh sách thông báo gồm tiêu đề, mức độ, nhóm, ngày gửi</p>
+          <button class="btn btn-primary" onclick="exportNoticesCSV()">⬇️ Tải CSV</button>
+        </div>
+        <div class="bgh-export-card">
+          <div class="bgh-export-ico">👥</div>
+          <h4>Danh sách giáo viên (CSV)</h4>
+          <p>Họ tên, chức vụ, tổ chuyên môn, email và số điện thoại</p>
+          <button class="btn btn-primary" onclick="exportTeachersCSV()">⬇️ Tải CSV</button>
+        </div>
+        <div class="bgh-export-card">
+          <div class="bgh-export-ico">🖨️</div>
+          <h4>In báo cáo tổng quan</h4>
+          <p>In dashboard thống kê toàn trường dạng trang in chuẩn A4</p>
+          <button class="btn btn-outline" onclick="printDashboard()">🖨️ In ngay</button>
+        </div>
+        <div class="bgh-export-card">
+          <div class="bgh-export-ico">📊</div>
+          <h4>Sao chép sang Sheet</h4>
+          <p>Mở Google Sheets để xem toàn bộ dữ liệu đã đồng bộ</p>
+          <button class="btn btn-outline" onclick="openGS()">📊 Mở Sheet</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /main-app -->
+
+<!-- CREATE MODAL -->
+<div class="overlay" id="m-create">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-ico">✏️</div>
+      <div class="modal-head-text">
+        <h3 id="create-title">Tạo thông báo mới</h3>
+        <p>Điền đầy đủ thông tin và chọn nhóm nhận thông báo</p>
+      </div>
+      <button class="modal-x" onclick="closeM('m-create')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Tiêu đề thông báo <span class="req">*</span></label>
+        <input type="text" class="form-input" id="f-title" placeholder="Nhập tiêu đề ngắn gọn, rõ ràng...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Mức độ ưu tiên <span class="req">*</span></label>
+          <select class="form-select" id="f-prio">
+            <option value="urgent">🚨 Khẩn cấp</option>
+            <option value="important">⭐ Quan trọng</option>
+            <option value="normal" selected>📌 Thông thường</option>
+            <option value="info">ℹ️ Thông tin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Người / Bộ phận gửi</label>
+          <input type="text" class="form-input" id="f-sender" value="Ban Giám Hiệu" placeholder="Tên người gửi...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Gửi đến nhóm đối tượng <span class="req">*</span></label>
+        <div class="group-picks" id="group-picks">
+          <label class="gpick" id="gp-all"><input type="checkbox" value="all"> 🌐 Toàn trường</label>
+          <label class="gpick" id="gp-leadership"><input type="checkbox" value="leadership"> 👑 Lãnh đạo trường</label>
+          <label class="gpick" id="gp-subject"><input type="checkbox" value="subject"> 📚 Tổ chuyên môn</label>
+          <label class="gpick" id="gp-teacher"><input type="checkbox" value="teacher"> 👩‍🏫 Giáo viên</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nội dung thông báo <span class="req">*</span></label>
+        <textarea class="form-textarea" id="f-content" placeholder="Nhập nội dung chi tiết..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Hạn thực hiện <span class="form-hint">(không bắt buộc)</span></label>
+          <input type="date" class="form-input" id="f-deadline">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Đính kèm <span class="form-hint">(link Drive)</span></label>
+          <input type="text" class="form-input" id="f-attach" placeholder="https://drive.google.com/...">
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeM('m-create')">Hủy</button>
+      <button class="btn btn-primary" onclick="saveNotice()">📤 Gửi thông báo</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="overlay" id="m-detail">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-ico" id="d-ico">📋</div>
+      <div class="modal-head-text">
+        <div class="detail-chips" id="d-chips"></div>
+        <h3 id="d-title"></h3>
+        <p id="d-meta"></p>
+      </div>
+      <button class="modal-x" onclick="closeM('m-detail')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-info-bar" id="d-info"></div>
+      <div class="detail-body" id="d-body"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" onclick="closeM('m-detail')">Đóng</button>
+      <button class="btn btn-primary btn-sm" id="d-edit">✏️ Chỉnh sửa</button>
+    </div>
+  </div>
+</div>
+
+<!-- GS MODAL -->
+<div class="overlay" id="m-gs">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-ico">📊</div>
+      <div class="modal-head-text">
+        <h3>Kết nối Google Sheets</h3>
+        <p>Hướng dẫn từng bước — Không cần lập trình</p>
+      </div>
+      <button class="modal-x" onclick="closeM('m-gs')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="gs-hero">
+        <div class="gs-hero-ico">📊</div>
+        <div class="gs-hero-text">
+          <h4>Dữ liệu thông báo sẽ được lưu tự động lên Google Sheets</h4>
+          <p>Mọi thành viên trong trường có thể xem và đồng bộ thông báo theo thời gian thực.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <span class="step-num">Bước 1 — Tạo Google Sheet</span>
+        <h5>Tạo bảng tính với các cột tiêu đề</h5>
+        <p>Mở <strong>sheets.google.com</strong> → Tạo sheet mới → Đặt tên tab là <strong>ThongBao</strong> → Thêm các cột hàng đầu tiên:</p>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">ID</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Tiêu đề</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Nội dung</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Mức độ</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Nhóm</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Người gửi</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Ngày gửi</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Hạn</span>
+          <span style="background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:4px;font-size:11.5px;font-weight:700;">Đính kèm</span>
+        </div>
+      </div>
+      <div class="step-card" style="border-color:var(--gold)">
+        <span class="step-num" style="color:var(--gold)">Bước 2 — Tạo Apps Script Web App</span>
+        <h5>Vào Extensions → Apps Script → Dán code sau</h5>
+        <div class="code-block">
+<pre>function doPost(e){var ss=SpreadsheetApp.getActiveSpreadsheet();var sh=ss.getSheetByName("ThongBao")||ss.getActiveSheet();var d=JSON.parse(e.postData.contents);sh.appendRow([d.id,d.title,d.content,d.priority,d.groups,d.sender,d.date,d.deadline,d.attachment]);return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);}
+function doGet(){var ss=SpreadsheetApp.getActiveSpreadsheet();var sh=ss.getSheetByName("ThongBao")||ss.getActiveSheet();var rows=sh.getDataRange().getValues();return ContentService.createTextOutput(JSON.stringify(rows)).setMimeType(ContentService.MimeType.JSON);}</pre>
+        </div>
+        <p style="margin-top:10px;font-size:12px;color:var(--text-mid);">
+          ▶ Nhấn <strong>Deploy → New deployment → Web App</strong><br>
+          ▶ Execute as: <strong>Me</strong> &nbsp;·&nbsp; Who has access: <strong>Anyone</strong><br>
+          ▶ Copy URL sau khi deploy thành công
+        </p>
+      </div>
+      <div class="step-card" style="border-color:var(--green)">
+        <span class="step-num" style="color:var(--green)">Bước 3 — Nhập URL và lưu</span>
+        <h5>Dán URL Web App vào ô bên dưới và nhấn Lưu</h5>
+        <div class="url-row">
+          <input type="text" id="gs-url" placeholder="https://script.google.com/macros/s/AKfy.../exec">
+          <button class="btn btn-primary btn-sm" onclick="saveGS()">💾 Lưu URL</button>
+        </div>
+        <div class="gs-status" id="gs-status"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeM('m-gs')">Đóng</button>
+      <button class="btn btn-primary" onclick="testGS()">🔗 Kiểm tra kết nối</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+let DB=[];
+let filterPrio='all',filterGroup=null,filterView='all',searchQ='',editId=null;
+let gsUrl=localStorage.getItem('gsUrl')||'';
+
+const $=id=>document.getElementById(id);
+const PRIO={urgent:{label:'Khẩn cấp',tagCls:'pb-urgent',ico:'🚨',stripe:'stripe-urgent'},important:{label:'Quan trọng',tagCls:'pb-important',ico:'⭐',stripe:'stripe-important'},normal:{label:'Thông thường',tagCls:'pb-normal',ico:'📌',stripe:'stripe-normal'},info:{label:'Thông tin',tagCls:'pb-info',ico:'ℹ️',stripe:'stripe-info'}};
+const GROUP={all:{label:'Toàn trường',cls:'gb-all',ico:'🌐'},leadership:{label:'Lãnh đạo',cls:'gb-leadership',ico:'👑'},subject:{label:'Tổ chuyên môn',cls:'gb-subject',ico:'📚'},teacher:{label:'Giáo viên',cls:'gb-teacher',ico:'👩‍🏫'}};
+
+function fmtDate(s){if(!s)return'';const d=new Date(s);return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric'});}
+function ago(s){const diff=Math.floor((Date.now()-new Date(s))/86400000);if(diff===0)return'Hôm nay';if(diff===1)return'Hôm qua';if(diff<7)return diff+' ngày trước';return fmtDate(s);}
+
+function getFiltered(){
+  let r=[...DB];
+  if(filterView==='urgent'||filterView==='important')r=r.filter(n=>n.priority===filterView);
+  if(filterGroup)r=r.filter(n=>n.groups.includes(filterGroup)||n.groups.includes('all'));
+  if(filterPrio!=='all')r=r.filter(n=>n.priority===filterPrio);
+  if(searchQ){const q=searchQ.toLowerCase();r=r.filter(n=>n.title.toLowerCase().includes(q)||n.content.toLowerCase().includes(q)||n.sender.toLowerCase().includes(q));}
+  r.sort((a,b)=>{if(a.read!==b.read)return a.read?1:-1;return new Date(b.date)-new Date(a.date);});
+  return r;
+}
+
+function render(){
+  const list=$('notices-list'),data=getFiltered();
+  $('rc').textContent=data.length?data.length+' thông báo':'';
+  $('s-total').textContent=DB.length;
+  const unread=DB.filter(n=>!n.read).length;
+  $('s-unread').textContent=unread;
+  $('s-read').textContent=DB.filter(n=>n.read).length;
+  $('s-urgent').textContent=DB.filter(n=>n.priority==='urgent').length;
+  const badge=$('badge-all');
+  badge.textContent=unread;
+  badge.style.display=unread?'':'none';
+  if(!data.length){list.innerHTML='<div class="empty-state"><div class="e-icon">📭</div><p>Chưa có thông báo nào. Nhấn <strong>✏️ Tạo thông báo</strong> để bắt đầu hoặc <strong>📊 Đồng bộ Sheet</strong> để tải dữ liệu.</p></div>';return;}
+  list.innerHTML=data.map((n,i)=>{
+    const p=PRIO[n.priority]||PRIO.normal;
+    const gTags=n.groups.map(g=>{const gd=GROUP[g]||GROUP.all;return`<span class="group-badge ${gd.cls}">${gd.ico} ${gd.label}</span>`;}).join('');
+    const dl=n.deadline?`<span>📅 Hạn: ${fmtDate(n.deadline)}</span>`:'';
+    const at=n.attachment?`<span>📎 Tài liệu đính kèm</span>`:'';
+    const markBtn=!n.read?`<button class="mark-btn" onclick="event.stopPropagation();markRead(${n.id})">✓ Đánh dấu đọc</button>`:'';
+    return`<div class="nc ${n.priority} ${!n.read?'unread':''}" style="animation-delay:${i*.04}s" onclick="openDetail(${n.id})"><div class="nc-stripe ${p.stripe}"></div><div class="nc-body"><div class="nc-meta"><span class="priority-badge ${p.tagCls}">${p.ico} ${p.label}</span>${gTags}</div><div class="nc-title">${n.title}</div><div class="nc-excerpt">${n.content.replace(/\n/g,' ')}</div><div class="nc-foot"><span>👤 ${n.sender}</span><span>🕐 ${ago(n.date)}</span>${dl}${at}</div></div><div class="nc-side" onclick="event.stopPropagation()"><div class="read-dot ${n.read?'read':''}"></div>${markBtn}</div></div>`;
+  }).join('');
+}
+
+function markRead(id){const n=DB.find(x=>x.id===id);if(n){n.read=true;render();toast('✅ Đã đánh dấu đã đọc','good');}}
+function doSearch(){searchQ=$('search-inp').value;render();}
+
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click',function(){
+    filterPrio=this.dataset.chip;
+    document.querySelectorAll('.chip').forEach(x=>x.className='chip');
+    this.classList.add('active-'+filterPrio);
+    render();
+  });
+});
+
+document.querySelectorAll('.nav-item[data-view]').forEach(el=>{
+  el.addEventListener('click',function(){
+    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+    filterView=this.dataset.view;filterGroup=null;
+    const lbl=this.querySelector('.ni-label').textContent;
+    $('page-title').textContent=lbl;$('section-heading').textContent=lbl;
+    render();
+  });
+});
+
+document.querySelectorAll('.nav-item[data-group]').forEach(el=>{
+  el.addEventListener('click',function(){
+    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+    filterGroup=this.dataset.group;filterView='all';
+    const lbl=this.querySelector('.ni-label').textContent;
+    $('page-title').textContent=lbl;$('section-heading').textContent=lbl;
+    render();
+  });
+});
+
+$('gs-nav-btn').addEventListener('click',openGS);
+
+function openDetail(id){
+  const n=DB.find(x=>x.id===id);if(!n)return;
+  n.read=true;
+  const p=PRIO[n.priority]||PRIO.normal;
+  const gTags=n.groups.map(g=>{const gd=GROUP[g]||GROUP.all;return`<span class="group-badge ${gd.cls}">${gd.ico} ${gd.label}</span>`;}).join(' ');
+  $('d-ico').textContent=p.ico;
+  $('d-chips').innerHTML=`<span class="priority-badge ${p.tagCls}">${p.ico} ${p.label}</span> ${gTags}`;
+  $('d-title').textContent=n.title;
+  $('d-meta').textContent=`Gửi bởi ${n.sender}  ·  ${ago(n.date)}`;
+  let info=`<div class="dib-item"><strong>📅 Ngày gửi:</strong> ${fmtDate(n.date)}</div>`;
+  if(n.deadline)info+=`<div class="dib-item"><strong>⏰ Hạn:</strong> ${fmtDate(n.deadline)}</div>`;
+  if(n.attachment)info+=`<div class="dib-item"><strong>📎 Đính kèm:</strong> <a href="${n.attachment}" target="_blank">Xem tài liệu</a></div>`;
+  $('d-info').innerHTML=info;
+  $('d-body').innerHTML='<p>'+n.content.split('\n').filter(Boolean).join('</p><p>')+'</p>';
+  $('d-edit').onclick=()=>{closeM('m-detail');openEdit(n.id);};
+  openM('m-detail');render();
+}
+
+function openCreate(){
+  editId=null;$('create-title').textContent='Tạo thông báo mới';
+  $('f-title').value='';$('f-prio').value='normal';
+  $('f-sender').value='Ban Giám Hiệu';
+  $('f-content').value='';$('f-deadline').value='';$('f-attach').value='';
+  resetPicks();openM('m-create');
+}
+
+function openEdit(id){
+  const n=DB.find(x=>x.id===id);if(!n)return;
+  editId=id;$('create-title').textContent='Chỉnh sửa thông báo';
+  $('f-title').value=n.title;$('f-prio').value=n.priority;
+  $('f-sender').value=n.sender;$('f-content').value=n.content;
+  $('f-deadline').value=n.deadline||'';$('f-attach').value=n.attachment||'';
+  resetPicks();n.groups.forEach(g=>togglePick(g,true));
+  openM('m-create');
+}
+
+function resetPicks(){document.querySelectorAll('.gpick').forEach(el=>{el.querySelector('input').checked=false;el.className='gpick';});}
+function togglePick(val,force){
+  const el=$('gp-'+val);if(!el)return;
+  const inp=el.querySelector('input');
+  const on=force!==undefined?force:!inp.checked;
+  inp.checked=on;el.className='gpick'+(on?' sel-'+val:'');
+}
+
+document.querySelectorAll('.gpick').forEach(el=>{
+  el.addEventListener('click',function(e){
+    e.preventDefault();togglePick(this.querySelector('input').value);
+  });
+});
+
+function saveNotice(){
+  const title=$('f-title').value.trim();
+  const content=$('f-content').value.trim();
+  const groups=[...document.querySelectorAll('#group-picks input:checked')].map(i=>i.value);
+  if(!title){toast('❌ Vui lòng nhập tiêu đề','err');return;}
+  if(!content){toast('❌ Vui lòng nhập nội dung','err');return;}
+  if(!groups.length){toast('❌ Chọn ít nhất một nhóm đối tượng','err');return;}
+  const rec={id:editId||Date.now(),title,priority:$('f-prio').value,groups,
+    sender:$('f-sender').value||'Ban Giám Hiệu',
+    date:new Date().toISOString().slice(0,10),
+    deadline:$('f-deadline').value,content,
+    attachment:$('f-attach').value,read:false};
+  if(editId){const i=DB.findIndex(x=>x.id===editId);if(i>=0)DB[i]={...DB[i],...rec};toast('✅ Cập nhật thành công','good');}
+  else{DB.unshift(rec);toast('✅ Đã gửi thông báo','good');if(gsUrl)pushGS(rec);}
+  closeM('m-create');render();
+}
+
+function openGS(){$('gs-url').value=gsUrl||'';$('gs-status').style.display='none';openM('m-gs');}
+
+function saveGS(){
+  const u=$('gs-url').value.trim();
+  if(!u){toast('❌ Vui lòng nhập URL','err');return;}
+  gsUrl=u;localStorage.setItem('gsUrl',u);
+  $('setup-banner').style.display='none';
+  showGSStatus('✅ Đã lưu URL thành công. Nhấn "Kiểm tra kết nối" để xác nhận.','ok');
+  toast('✅ Đã lưu cấu hình Google Sheet','good');
+}
+
+function showGSStatus(msg,cls){const el=$('gs-status');el.textContent=msg;el.className='gs-status '+cls;el.style.display='block';}
+
+async function testGS(){
+  const u=$('gs-url').value.trim()||gsUrl;
+  if(!u){showGSStatus('❌ Chưa có URL. Vui lòng nhập URL Web App.','err');return;}
+  showGSStatus('⏳ Đang kiểm tra kết nối...','ok');
+  try{const r=await fetch(u);if(r.ok)showGSStatus('✅ Kết nối thành công! Google Sheet đã sẵn sàng nhận dữ liệu.','ok');
+  else showGSStatus('⚠️ Kết nối được nhưng Sheet trả lỗi. Kiểm tra lại Apps Script.','err');}
+  catch{showGSStatus('⚠️ Không thể GET trực tiếp (CORS bình thường). Thử gửi một thông báo thật để kiểm tra.','ok');}
+}
+
+async function syncSheet(){
+  if(!gsUrl){openGS();return;}
+  const btn=$('sync-btn');
+  btn.innerHTML='<span class="spin"></span> Đang đồng bộ...';btn.disabled=true;
+  try{
+    const r=await fetch(gsUrl);
+    if(r.ok){
+      const rows=await r.json();
+      if(rows.length>1){
+        const ids=new Set(DB.map(n=>String(n.id)));
+        const news=rows.slice(1).filter(r=>r[0]&&!ids.has(String(r[0]))).map(r=>({
+          id:r[0],title:r[1]||'',content:r[2]||'',priority:r[3]||'normal',
+          groups:(r[4]||'all').split(',').map(s=>s.trim()),
+          sender:r[5]||'',date:r[6]||'',deadline:r[7]||'',attachment:r[8]||'',read:false
+        }));
+        DB=[...news,...DB];
+        toast(`✅ Đồng bộ ${news.length} thông báo mới`,'good');render();
+      }else toast('📊 Không có dữ liệu mới','ok');
+    }
+  }catch{toast('⚠️ Không thể kết nối Sheet. Kiểm tra URL.','err');}
+  btn.innerHTML='📊 Đồng bộ Sheet';btn.disabled=false;
+}
+
+async function pushGS(data){
+  if(!gsUrl)return;
+  try{await fetch(gsUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,groups:data.groups.join(', ')})});}
+  catch{}
+}
+
+function openM(id){$(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeM(id){$(id).classList.remove('open');document.body.style.overflow='';}
+document.querySelectorAll('.overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)closeM(o.id);});});
+
+function toast(msg,type=''){
+  const tc=$('toasts');const el=document.createElement('div');
+  el.className='toast toast-'+(type||'ok');el.textContent=msg;tc.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},3000);
+}
+
+// INIT
+if(gsUrl){$('setup-banner').style.display='none';}
+render();
+// Tự động đồng bộ nếu đã có URL
+if(gsUrl){setTimeout(()=>syncSheet(),1000);}
+
+// LANDING → APP TRANSITION
+function enterApp(){
+  const landing=document.getElementById('landing');
+  const app=document.getElementById('main-app');
+  landing.classList.add('hide');
+  setTimeout(()=>{
+    landing.style.display='none';
+    app.style.display='flex';
+    app.style.animation='fadeUp .5s both';
+  },550);
+}
+
+// SCHOOL YEAR
+function updateSchoolYear(val){
+  localStorage.setItem('vts_school_year', val);
+  const sub = document.getElementById('s-total');
+  if(sub){ const p=sub.nextElementSibling; if(p) p.textContent='Năm học '+val; }
+}
+// Restore saved year on load
+(function(){
+  const saved = localStorage.getItem('vts_school_year') || '2025-2026';
+  const sel = document.getElementById('school-year-select');
+  if(sel) sel.value = saved;
+  updateSchoolYear(saved);
+})();
+
+// ACCORDION
+function toggleAcc(id){
+  const el=document.getElementById('acc-'+id);
+  const isOpen=el.classList.contains('open');
+  // close all first
+  ['leadership','subject','teacher'].forEach(k=>{
+    document.getElementById('acc-'+k).classList.remove('open');
+  });
+  if(!isOpen) el.classList.add('open');
+}
+
+// ROLE TABS — removed (now list boxes)
+
+/* ══════════════════════════════════════════
+   TOOL PANELS — EVENTS / WEEKPLAN / DOCS
+══════════════════════════════════════════ */
+
+// ── State ──
+let EVENTS   = JSON.parse(localStorage.getItem('vts_events')   || '[]');
+let TASKS    = JSON.parse(localStorage.getItem('vts_tasks')    || '[]');
+let DOCS     = JSON.parse(localStorage.getItem('vts_docs')     || '[]');
+let calDate  = new Date();
+let weekOffset = 0;
+let docFilter = 'all';
+let currentPanel = null;
+
+const MONTHS_VI = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+const DAYS_VI   = ['T2','T3','T4','T5','T6','T7'];
+
+function saveEvt(){ localStorage.setItem('vts_events', JSON.stringify(EVENTS)); }
+function saveTsk(){ localStorage.setItem('vts_tasks',  JSON.stringify(TASKS)); }
+function saveDoc(){ localStorage.setItem('vts_docs',   JSON.stringify(DOCS)); }
+
+// ── Panel switching ──
+function openPanel(name){
+  // hide all notices-area elements
+  ['setup-banner','stats-row-wrap','section-head-wrap','toolbar-wrap','notices-list'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  // also hide via class
+  document.querySelectorAll('.stats-row,.section-head,.toolbar,.notices-list,.setup-banner').forEach(el=>el.style.display='none');
+
+  ['panel-events','panel-weekplan','panel-docs'].forEach(id=>{
+    document.getElementById(id).style.display='none';
+  });
+
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('nav-'+name).classList.add('active');
+  document.getElementById('panel-'+name).style.display='block';
+
+  const labels = {events:'Lịch sự kiện', weekplan:'Kế hoạch tuần', docs:'Tài liệu'};
+  $('page-title').textContent = labels[name];
+  currentPanel = name;
+
+  if(name==='events')   renderCalendar();
+  if(name==='weekplan') renderWeek();
+  if(name==='docs')     renderDocs();
+}
+
+function backToNotices(){
+  ['panel-events','panel-weekplan','panel-docs'].forEach(id=>{
+    document.getElementById(id).style.display='none';
+  });
+  document.querySelectorAll('.stats-row,.section-head,.toolbar,.notices-list,.setup-banner').forEach(el=>el.style.display='');
+  currentPanel = null;
+  const firstNav = document.querySelector('.nav-item[data-view="all"]');
+  if(firstNav){ document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active')); firstNav.classList.add('active'); }
+  $('page-title').textContent='Tất cả thông báo';
+  render();
+}
+
+// ── Override nav-item clicks to go back to notices ──
+document.querySelectorAll('.nav-item[data-view], .nav-item[data-group]').forEach(el=>{
+  el.addEventListener('click', ()=>{ if(currentPanel) backToNotices(); });
+});
+
+/* ─── CALENDAR ─── */
+function changeMonth(d){ calDate.setMonth(calDate.getMonth()+d); renderCalendar(); }
+
+function renderCalendar(){
+  const y=calDate.getFullYear(), m=calDate.getMonth();
+  $('month-label').textContent = MONTHS_VI[m] + ' ' + y;
+
+  const first = new Date(y,m,1).getDay(); // 0=Sun
+  const startOff = first===0?6:first-1;
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const today = new Date();
+
+  let html = `<div class="cal-weekdays">${DAYS_VI.map(d=>`<span>${d}</span>`).join('')}<span>CN</span></div><div class="cal-days">`;
+
+  // prev month fill
+  const prevDays = new Date(y,m,0).getDate();
+  for(let i=startOff-1;i>=0;i--){
+    html+=`<div class="cal-day other-month"><div class="cal-day-num">${prevDays-i}</div></div>`;
+  }
+
+  for(let d=1;d<=daysInMonth;d++){
+    const isToday = today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d;
+    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const evs = EVENTS.filter(e=>e.date===dateStr);
+    const hasCls = evs.length?'has-event':'';
+    html+=`<div class="cal-day ${isToday?'today':''} ${hasCls}" onclick="calDayClick('${dateStr}')">
+      <div class="cal-day-num">${d}</div>
+      ${evs.slice(0,2).map(e=>`<div class="cal-event-dot">• ${e.title}</div>`).join('')}
+    </div>`;
+  }
+
+  // next month fill
+  const total = startOff + daysInMonth;
+  const remain = total%7===0?0:7-(total%7);
+  for(let d=1;d<=remain;d++) html+=`<div class="cal-day other-month"><div class="cal-day-num">${d}</div></div>`;
+
+  html+='</div>';
+  $('tp-calendar').innerHTML=html;
+  renderEventList();
+}
+
+function calDayClick(dateStr){
+  // Pre-fill add form with clicked date
+  const el=document.getElementById('if-event-date');
+  if(el) el.value=dateStr;
+}
+
+function renderEventList(){
+  const y=calDate.getFullYear(), m=calDate.getMonth();
+  const monthStr=`${y}-${String(m+1).padStart(2,'0')}`;
+  const evs = EVENTS.filter(e=>e.date.startsWith(monthStr)).sort((a,b)=>a.date.localeCompare(b.date));
+
+  if(!evs.length){
+    $('tp-event-list').innerHTML=`<div class="empty-state"><div class="e-icon">📅</div><p>Chưa có sự kiện nào trong tháng này. Nhấn <strong>+ Thêm sự kiện</strong> để tạo.</p></div>`;
+    return;
+  }
+  const typeMap={school:{label:'Nhà trường',cls:'ev-school'},holiday:{label:'Lễ/Tết',cls:'ev-holiday'},meeting:{label:'Họp',cls:'ev-meeting'},other:{label:'Khác',cls:'ev-other'}};
+  $('tp-event-list').innerHTML = evs.map(e=>{
+    const d=new Date(e.date); const t=typeMap[e.type]||typeMap.other;
+    return`<div class="event-card">
+      <div class="ev-date-box"><div class="ev-day">${String(d.getDate()).padStart(2,'0')}</div><div class="ev-month">${MONTHS_VI[d.getMonth()].replace('Tháng ','Th.')}</div></div>
+      <div class="ev-info"><h4>${e.title}</h4><p>${e.note||''}</p></div>
+      <span class="ev-badge ${t.cls}">${t.label}</span>
+      <button class="ev-del" onclick="delEvent(${e.id},event)">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+function openAddEvent(){
+  const existing=document.getElementById('inline-event-form');
+  if(existing){existing.remove();return;}
+  const form=document.createElement('div');
+  form.id='inline-event-form'; form.className='inline-form';
+  form.innerHTML=`<h4>📅 Thêm sự kiện mới</h4>
+  <div class="if-row">
+    <input type="text" class="form-input" id="if-event-title" placeholder="Tên sự kiện *" style="flex:2">
+    <input type="date" class="form-input" id="if-event-date" value="${new Date().toISOString().slice(0,10)}">
+    <select class="form-select" id="if-event-type">
+      <option value="school">🏫 Nhà trường</option>
+      <option value="holiday">🎉 Lễ/Tết</option>
+      <option value="meeting">📋 Họp</option>
+      <option value="other">📦 Khác</option>
+    </select>
+    <input type="text" class="form-input" id="if-event-note" placeholder="Ghi chú...">
+    <div class="if-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEvent()">💾 Lưu</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('inline-event-form').remove()">Hủy</button>
+    </div>
+  </div>`;
+  $('panel-events').insertBefore(form, $('tp-month-nav'));
+}
+
+function saveEvent(){
+  const t=$('if-event-title').value.trim();
+  if(!t){toast('❌ Vui lòng nhập tên sự kiện','err');return;}
+  EVENTS.push({id:Date.now(),title:t,date:$('if-event-date').value,type:$('if-event-type').value,note:$('if-event-note').value});
+  saveEvt(); document.getElementById('inline-event-form').remove();
+  renderCalendar(); toast('✅ Đã thêm sự kiện','good');
+}
+
+function delEvent(id, e){ e.stopPropagation(); EVENTS=EVENTS.filter(x=>x.id!==id); saveEvt(); renderCalendar(); toast('🗑️ Đã xoá sự kiện','ok'); }
+
+/* ─── WEEK PLAN ─── */
+function changeWeek(d){ weekOffset+=d; renderWeek(); }
+
+function getWeekDates(){
+  const now=new Date(); now.setHours(0,0,0,0);
+  const dow=now.getDay()===0?6:now.getDay()-1;
+  const mon=new Date(now); mon.setDate(now.getDate()-dow+(weekOffset*7));
+  return Array.from({length:6},(_,i)=>{ const d=new Date(mon); d.setDate(mon.getDate()+i); return d; });
+}
+
+const TASK_COLORS=['wtask-blue','wtask-gold','wtask-green','wtask-red','wtask-teal'];
+
+function renderWeek(){
+  const days=getWeekDates();
+  const today=new Date(); today.setHours(0,0,0,0);
+  const d0=days[0], d5=days[5];
+  $('week-label').textContent=`${String(d0.getDate()).padStart(2,'0')}/${String(d0.getMonth()+1).padStart(2,'0')} – ${String(d5.getDate()).padStart(2,'0')}/${String(d5.getMonth()+1).padStart(2,'0')}/${d5.getFullYear()}`;
+
+  $('tp-week-grid').innerHTML=days.map(d=>{
+    const ds=d.toISOString().slice(0,10);
+    const isToday=d.getTime()===today.getTime();
+    const tasks=TASKS.filter(t=>t.date===ds);
+    const dayNames=['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
+    const idx=d.getDay()===0?5:d.getDay()-1;
+    return`<div class="week-col ${isToday?'today-col':''}">
+      <div class="week-col-head">
+        <div class="wch-day">${dayNames[idx]}</div>
+        <div class="wch-date">${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}</div>
+      </div>
+      <div class="week-tasks">
+        ${tasks.map(t=>`<div class="wtask ${TASK_COLORS[t.color%5]}" onclick="">${t.title}<span class="wtask-del" onclick="delTask(${t.id},event)">✕</span></div>`).join('')}
+      </div>
+      <button class="add-task-btn" onclick="openAddTask('${ds}')">+ Thêm</button>
+    </div>`;
+  }).join('');
+}
+
+function openAddTask(dateStr){
+  const existing=document.getElementById('inline-task-form');
+  if(existing){existing.remove();if(!dateStr)return;}
+  const form=document.createElement('div');
+  form.id='inline-task-form'; form.className='inline-form';
+  form.innerHTML=`<h4>🗓️ Thêm nhiệm vụ</h4>
+  <div class="if-row">
+    <input type="text" class="form-input" id="if-task-title" placeholder="Tên nhiệm vụ *" style="flex:2">
+    <input type="date" class="form-input" id="if-task-date" value="${dateStr||new Date().toISOString().slice(0,10)}">
+    <select class="form-select" id="if-task-color">
+      <option value="0">🔵 Xanh</option><option value="1">🟡 Vàng</option>
+      <option value="2">🟢 Xanh lá</option><option value="3">🔴 Đỏ</option><option value="4">🔷 Teal</option>
+    </select>
+    <div class="if-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveTask()">💾 Lưu</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('inline-task-form').remove()">Hủy</button>
+    </div>
+  </div>`;
+  $('panel-weekplan').insertBefore(form, $('week-label').parentElement);
+}
+
+function saveTask(){
+  const t=$('if-task-title').value.trim();
+  if(!t){toast('❌ Vui lòng nhập tên nhiệm vụ','err');return;}
+  TASKS.push({id:Date.now(),title:t,date:$('if-task-date').value,color:parseInt($('if-task-color').value)});
+  saveTsk(); document.getElementById('inline-task-form').remove();
+  renderWeek(); toast('✅ Đã thêm nhiệm vụ','good');
+}
+
+function delTask(id,e){ e.stopPropagation(); TASKS=TASKS.filter(x=>x.id!==id); saveTsk(); renderWeek(); }
+
+/* ─── DOCS ─── */
+function filterDocs(btn, cat){
+  docFilter=cat;
+  document.querySelectorAll('.doc-cat').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDocs();
+}
+
+function renderDocs(){
+  const list = docFilter==='all'?DOCS:DOCS.filter(d=>d.cat===docFilter);
+  if(!list.length){
+    $('tp-doc-grid').innerHTML=`<div class="doc-empty"><div class="e-icon">📁</div><p>Chưa có tài liệu nào. Nhấn <strong>+ Thêm tài liệu</strong> để thêm.</p></div>`;
+    return;
+  }
+  const catIco={official:'📜',form:'📝',plan:'📌',other:'📦'};
+  const catColors={official:'doc-ico-blue',form:'doc-ico-gold',plan:'doc-ico-green',other:'doc-ico-teal'};
+  $('tp-doc-grid').innerHTML=list.map(d=>`
+    <div class="doc-card">
+      <div class="doc-ico ${catColors[d.cat]||'doc-ico-blue'}">${catIco[d.cat]||'📄'}</div>
+      <div class="doc-info">
+        <h4>${d.title}</h4>
+        <p>${d.desc||'Không có mô tả'}</p>
+        <div class="doc-meta">
+          <span class="doc-tag">${{official:'Văn bản',form:'Biểu mẫu',plan:'Kế hoạch',other:'Khác'}[d.cat]||'Khác'}</span>
+          <span style="font-size:11px;color:var(--text-muted)">· ${d.date||''}</span>
+        </div>
+      </div>
+      <div class="doc-actions">
+        ${d.url?`<button class="doc-btn" onclick="window.open('${d.url}','_blank')">🔗 Mở</button>`:''}
+        <button class="doc-btn del" onclick="delDoc(${d.id},event)">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+
+function openAddDoc(){
+  const existing=document.getElementById('inline-doc-form');
+  if(existing){existing.remove();return;}
+  const form=document.createElement('div');
+  form.id='inline-doc-form'; form.className='inline-form';
+  form.innerHTML=`<h4>📁 Thêm tài liệu mới</h4>
+  <div class="if-row">
+    <input type="text" class="form-input" id="if-doc-title" placeholder="Tên tài liệu *" style="flex:2">
+    <select class="form-select" id="if-doc-cat">
+      <option value="official">📜 Văn bản</option>
+      <option value="form">📝 Biểu mẫu</option>
+      <option value="plan">📌 Kế hoạch</option>
+      <option value="other">📦 Khác</option>
+    </select>
+    <input type="text" class="form-input" id="if-doc-desc" placeholder="Mô tả ngắn...">
+    <input type="text" class="form-input" id="if-doc-url" placeholder="Link Google Drive (nếu có)...">
+    <div class="if-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveDoc2()">💾 Lưu</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('inline-doc-form').remove()">Hủy</button>
+    </div>
+  </div>`;
+  $('panel-docs').insertBefore(form, $('tp-doc-cats'));
+}
+
+function saveDoc2(){
+  const t=$('if-doc-title').value.trim();
+  if(!t){toast('❌ Vui lòng nhập tên tài liệu','err');return;}
+  DOCS.push({id:Date.now(),title:t,cat:$('if-doc-cat').value,desc:$('if-doc-desc').value,url:$('if-doc-url').value,date:new Date().toLocaleDateString('vi-VN')});
+  saveDoc(); document.getElementById('inline-doc-form').remove();
+  renderDocs(); toast('✅ Đã thêm tài liệu','good');
+}
+
+
+/* ══════════════════════════════════════
+   BGH ADMIN JS
+══════════════════════════════════════ */
+
+let TEACHERS = JSON.parse(localStorage.getItem('vts_teachers') || '[]');
+function saveTch(){ localStorage.setItem('vts_teachers', JSON.stringify(TEACHERS)); }
+
+// Default sample teachers if empty
+if(!TEACHERS.length){
+  TEACHERS = [
+    {id:1,name:'Trần Thị Thu Thủy',role:'Hiệu trưởng',to:'BGH',email:'',phone:'',color:'#c8922a'},
+    {id:2,name:'Nguyễn Thanh Liêm',role:'Giáo viên',to:'Toán',email:'ntliem.c2vtssadec@dongthap.edu.vn',phone:'0815 899 878',color:'#1a5ccc'},
+  ];
+  saveTch();
+}
+
+// ── Register BGH panels in openPanel ──
+const _origOpenPanel = openPanel;
+openPanel = function(name){
+  if(name.startsWith('bgh-')){
+    ['setup-banner','stats-row-wrap','section-head-wrap','toolbar-wrap','notices-list'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.style.display='none';
+    });
+    document.querySelectorAll('.stats-row,.section-head,.toolbar,.notices-list,.setup-banner').forEach(el=>el.style.display='none');
+    ['panel-events','panel-weekplan','panel-docs',
+     'panel-bgh-dashboard','panel-bgh-notices','panel-bgh-teachers','panel-bgh-export'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.style.display='none';
+    });
+    document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+    const navEl=document.getElementById('nav-'+name);
+    if(navEl) navEl.classList.add('active');
+    const panelEl=document.getElementById('panel-'+name);
+    if(panelEl) panelEl.style.display='block';
+    const labels={'bgh-dashboard':'Tổng quan BGH','bgh-notices':'Quản lý thông báo','bgh-teachers':'Danh sách giáo viên','bgh-export':'Xuất báo cáo'};
+    $('page-title').textContent = labels[name]||name;
+    currentPanel = name;
+    if(name==='bgh-dashboard') renderBghDashboard();
+    if(name==='bgh-notices')   renderBghNotices();
+    if(name==='bgh-teachers')  renderTeachers();
+  } else {
+    _origOpenPanel(name);
+  }
+};
+
+// ── DASHBOARD ──
+function renderBghDashboard(){
+  const total   = NOTICES.length;
+  const unread  = NOTICES.filter(n=>!n.read).length;
+  const urgent  = NOTICES.filter(n=>n.priority==='urgent').length;
+  const tchCnt  = TEACHERS.length;
+  $('bgh-total').textContent = total;
+  $('bgh-unread').textContent = unread;
+  $('bgh-urgent').textContent = urgent;
+  $('bgh-teachers-count').textContent = tchCnt;
+
+  // Priority bars
+  const prioMap = {urgent:{lbl:'🚨 Khẩn cấp',color:'#e74c3c'},important:{lbl:'⭐ Quan trọng',color:'#c8922a'},normal:{lbl:'📌 Thường',color:'#1a5ccc'},info:{lbl:'ℹ️ Thông tin',color:'#1a7a4a'}};
+  const prioCounts = {};
+  NOTICES.forEach(n=>{ prioCounts[n.priority]=(prioCounts[n.priority]||0)+1; });
+  const maxP = Math.max(...Object.values(prioCounts),1);
+  $('bgh-prio-bars').innerHTML = Object.entries(prioMap).map(([k,v])=>{
+    const cnt=prioCounts[k]||0;
+    return`<div class="bgh-bar-row"><div class="bgh-bar-lbl">${v.lbl}</div><div class="bgh-bar-track"><div class="bgh-bar-fill" style="width:${(cnt/maxP*100).toFixed(1)}%;background:${v.color}"></div></div><div class="bgh-bar-num">${cnt}</div></div>`;
+  }).join('');
+
+  // Group bars
+  const grpMap = {leadership:'👑 Lãnh đạo',subject:'📚 Tổ CM',teacher:'👩‍🏫 GV',all:'🏫 Toàn trường'};
+  const grpColors = {leadership:'#c8922a',subject:'#1a5ccc',teacher:'#1a7a4a',all:'#0e7490'};
+  const grpCounts = {};
+  NOTICES.forEach(n=>{ (n.groups||[]).forEach(g=>{ grpCounts[g]=(grpCounts[g]||0)+1; }); });
+  const maxG = Math.max(...Object.values(grpCounts),1);
+  $('bgh-group-bars').innerHTML = Object.entries(grpMap).map(([k,v])=>{
+    const cnt=grpCounts[k]||0;
+    return`<div class="bgh-bar-row"><div class="bgh-bar-lbl">${v}</div><div class="bgh-bar-track"><div class="bgh-bar-fill" style="width:${(cnt/maxG*100).toFixed(1)}%;background:${grpColors[k]}"></div></div><div class="bgh-bar-num">${cnt}</div></div>`;
+  }).join('');
+
+  // Recent 5
+  const pBadge = {urgent:'background:#fef2f2;color:#e74c3c',important:'background:var(--gold-light);color:var(--gold)',normal:'background:var(--sky);color:var(--blue)',info:'background:var(--green-light);color:var(--green)'};
+  const pLbl   = {urgent:'Khẩn cấp',important:'Quan trọng',normal:'Thường',info:'Thông tin'};
+  const recent = [...NOTICES].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5);
+  $('bgh-recent-list').innerHTML = recent.length ? recent.map(n=>`
+    <div class="bgh-recent-item">
+      <span class="bgh-recent-badge" style="${pBadge[n.priority]||''}">${pLbl[n.priority]||''}</span>
+      <span class="bgh-recent-title">${n.title}</span>
+      <span class="bgh-recent-date">${n.date||''}</span>
+    </div>`).join('') : '<div class="bgh-empty"><div class="e-icon">📋</div><p>Chưa có thông báo nào</p></div>';
+}
+
+// ── NOTICE MANAGEMENT ──
+function renderBghNotices(){
+  const pFilter = ($('bgh-filter-prio')||{}).value||'';
+  const gFilter = ($('bgh-filter-group')||{}).value||'';
+  const sFilter = (($('bgh-search-notice')||{}).value||'').toLowerCase();
+  let list = NOTICES.filter(n=>{
+    if(pFilter && n.priority!==pFilter) return false;
+    if(gFilter && !(n.groups||[]).includes(gFilter)) return false;
+    if(sFilter && !n.title.toLowerCase().includes(sFilter)) return false;
+    return true;
+  }).sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  const stripeColor={urgent:'#e74c3c',important:'#c8922a',normal:'#1a5ccc',info:'#1a7a4a'};
+  const pLbl={urgent:'🚨 Khẩn cấp',important:'⭐ Quan trọng',normal:'📌 Thường',info:'ℹ️ Thông tin'};
+  const pStyle={urgent:'background:#fef2f2;color:#e74c3c',important:'background:var(--gold-light);color:var(--gold)',normal:'background:var(--sky);color:var(--blue)',info:'background:var(--green-light);color:var(--green)'};
+  const gLbl={leadership:'👑 Lãnh đạo',subject:'📚 Tổ CM',teacher:'👩‍🏫 GV',all:'🏫 Toàn trường'};
+
+  if(!list.length){
+    $('bgh-notice-table').innerHTML='<div class="bgh-empty"><div class="e-icon">📋</div><p>Không có thông báo phù hợp</p></div>';
+    return;
+  }
+  $('bgh-notice-table').innerHTML = list.map(n=>`
+    <div class="bgh-notice-row">
+      <div class="bgh-nr-stripe" style="background:${stripeColor[n.priority]||'#ccc'}"></div>
+      <div class="bgh-nr-info">
+        <h4>${n.title}</h4>
+        <p>${n.sender||''} · ${n.date||''}</p>
+      </div>
+      <div class="bgh-nr-badges">
+        <span class="bgh-recent-badge" style="${pStyle[n.priority]||''}">${pLbl[n.priority]||''}</span>
+        ${(n.groups||[]).map(g=>`<span class="bgh-recent-badge" style="background:var(--sky);color:var(--blue)">${gLbl[g]||g}</span>`).join('')}
+      </div>
+      <div class="bgh-nr-act">
+        <button class="bgh-act-btn" onclick="editNotice(${n.id})">✏️ Sửa</button>
+        <button class="bgh-act-btn del" onclick="deleteNotice(${n.id})">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+
+function deleteNotice(id){
+  if(!confirm('Xoá thông báo này?')) return;
+  NOTICES = NOTICES.filter(n=>n.id!==id);
+  saveNotices(); renderBghNotices(); render();
+  toast('🗑️ Đã xoá thông báo','ok');
+}
+function editNotice(id){
+  const n=NOTICES.find(x=>x.id===id); if(!n) return;
+  openCreate(); // reuse create modal
+  setTimeout(()=>{
+    $('f-title').value=n.title;
+    $('f-prio').value=n.priority;
+    $('f-content').value=n.content||'';
+    $('f-deadline').value=n.deadline||'';
+    $('f-attach').value=n.attachment||'';
+    document.querySelectorAll('.group-chip').forEach(c=>{ c.classList.toggle('selected', (n.groups||[]).includes(c.dataset.g)); });
+    editId=n.id;
+    $('create-title').textContent='Chỉnh sửa thông báo';
+  },50);
+}
+
+// ── TEACHERS ──
+const AVA_COLORS=['#1a5ccc','#c8922a','#1a7a4a','#0e7490','#7c3aed','#db2777','#b45309'];
+function avaColor(name){ let h=0; for(let c of name) h+=c.charCodeAt(0); return AVA_COLORS[h%AVA_COLORS.length]; }
+function initials(name){ return name.trim().split(/\s+/).map(w=>w[0]).slice(-2).join('').toUpperCase(); }
+
+function renderTeachers(){
+  const toF = ($('bgh-filter-to')||{}).value||'';
+  const sF  = (($('bgh-search-teacher')||{}).value||'').toLowerCase();
+  let list = TEACHERS.filter(t=>{
+    if(toF && t.to!==toF) return false;
+    if(sF && !t.name.toLowerCase().includes(sF)) return false;
+    return true;
+  });
+  if(!list.length){
+    $('bgh-teacher-list').innerHTML='<div class="bgh-empty"><div class="e-icon">👥</div><p>Không tìm thấy giáo viên nào. Nhấn <strong>+ Thêm giáo viên</strong> để bắt đầu.</p></div>';
+    return;
+  }
+  $('bgh-teacher-list').innerHTML=`<div class="bgh-teacher-grid">${list.map(t=>`
+    <div class="bgh-teacher-card">
+      <div class="bgh-tc-ava" style="background:${avaColor(t.name)}">${initials(t.name)}</div>
+      <div class="bgh-tc-info">
+        <h4>${t.name}</h4>
+        <p>${t.role||''}</p>
+        ${t.phone?`<p>📱 ${t.phone}</p>`:''}
+        <span class="bgh-tc-tag">${t.to||''}</span>
+      </div>
+      <button class="bgh-tc-del" onclick="delTeacher(${t.id},event)">🗑️</button>
+    </div>`).join('')}</div>`;
+}
+
+function openAddTeacher(){
+  const ex=document.getElementById('inline-teacher-form'); if(ex){ex.remove();return;}
+  const form=document.createElement('div');
+  form.id='inline-teacher-form'; form.className='inline-form';
+  form.innerHTML=`<h4>👥 Thêm giáo viên</h4>
+  <div class="if-row">
+    <input type="text" class="form-input" id="if-tch-name" placeholder="Họ và tên *" style="flex:2">
+    <input type="text" class="form-input" id="if-tch-role" placeholder="Chức vụ">
+    <select class="form-select" id="if-tch-to">
+      <option value="BGH">Ban Giám Hiệu</option>
+      <option value="Toán">Tổ Toán – Lý – Tin</option>
+      <option value="Văn">Tổ Văn – Sử – Địa</option>
+      <option value="Anh">Tổ Tiếng Anh</option>
+      <option value="Lý">Tổ KHTN</option>
+      <option value="Thể">Tổ TD – Nghệ thuật</option>
+      <option value="Khác">Bộ phận khác</option>
+    </select>
+    <input type="text" class="form-input" id="if-tch-phone" placeholder="Số điện thoại">
+    <input type="text" class="form-input" id="if-tch-email" placeholder="Email">
+    <div class="if-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveTeacher()">💾 Lưu</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('inline-teacher-form').remove()">Hủy</button>
+    </div>
+  </div>`;
+  $('panel-bgh-teachers').insertBefore(form, document.querySelector('#panel-bgh-teachers .bgh-filter-row'));
+}
+
+function saveTeacher(){
+  const name=$('if-tch-name').value.trim();
+  if(!name){toast('❌ Vui lòng nhập họ tên','err');return;}
+  TEACHERS.push({id:Date.now(),name,role:$('if-tch-role').value,to:$('if-tch-to').value,phone:$('if-tch-phone').value,email:$('if-tch-email').value});
+  saveTch(); document.getElementById('inline-teacher-form').remove();
+  renderTeachers(); toast('✅ Đã thêm giáo viên','good');
+}
+
+function delTeacher(id,e){
+  e.stopPropagation();
+  if(!confirm('Xoá giáo viên này?')) return;
+  TEACHERS=TEACHERS.filter(t=>t.id!==id); saveTch(); renderTeachers();
+  toast('🗑️ Đã xoá','ok');
+}
+
+// ── EXPORT ──
+function exportNoticesCSV(){
+  const header='ID,Tiêu đề,Mức độ,Nhóm,Người gửi,Ngày,Hạn\n';
+  const rows=NOTICES.map(n=>[n.id,`"${n.title}"`,n.priority,(n.groups||[]).join('|'),n.sender||'',n.date||'',n.deadline||''].join(',')).join('\n');
+  downloadCSV('thongbao.csv', '\uFEFF'+header+rows);
+}
+
+function exportTeachersCSV(){
+  const header='STT,Họ tên,Chức vụ,Tổ,Điện thoại,Email\n';
+  const rows=TEACHERS.map((t,i)=>[i+1,`"${t.name}"`,t.role||'',t.to||'',t.phone||'',t.email||''].join(',')).join('\n');
+  downloadCSV('giaovien.csv', '\uFEFF'+header+rows);
+}
+
+function downloadCSV(filename, content){
+  const blob=new Blob([content],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=filename; a.click();
+  toast('✅ Đã tải '+filename,'good');
+}
+
+function printDashboard(){
+  renderBghDashboard();
+  window.print();
+}
+
+
+</script>
+</body>
+</html>
